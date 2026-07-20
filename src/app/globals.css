@@ -1,7 +1,247 @@
 @import "tailwindcss";
 
-:root {
-  --color-primary: #1a2332;
-  --color-accent: #c9a84c;
-  --color-accent-dark: #a8873a;
+/* ── Camo / field design system ──────────────────────────────
+   Deep olive-black base, khaki/sand accents, tactical-orange signal.
+   Fonts: Oswald (display) + Manrope (body) via next/font (Latin+Cyrillic).
+   CJK (zh) falls back to the user's system CJK font — no webfont shipped. */
+@theme {
+  --color-field-950: #0f120c;
+  --color-field-900: #14180f;
+  --color-field-850: #191e13;
+  --color-field-800: #202618;
+  --color-field-700: #2b331f;
+  --color-field-600: #3a4530;
+
+  --color-olive: #6c7452;
+  --color-olive-light: #909a6c;
+
+  --color-sand: #cebf95;
+  --color-sand-dim: #a89c77;
+
+  --color-signal: #d9782a;
+  --color-signal-bright: #ea8a37;
+
+  --color-paper: #ece9de;
+  --color-muted: #9ba089;
+  --color-faint: #6d7360;
+  --color-hairline: rgba(206, 191, 149, 0.14);
+
+  --font-display: var(--font-oswald), "PingFang SC", "Microsoft YaHei",
+    "Noto Sans SC", sans-serif;
+  --font-body: var(--font-manrope), "PingFang SC", "Microsoft YaHei",
+    "Noto Sans SC", sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background-color: var(--color-field-950);
+  color: var(--color-paper);
+  font-family: var(--font-body);
+  font-feature-settings: "ss01", "cv01";
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+/* Layered field backdrop: soft olive light-pools + a faint camo tile. */
+.field-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-color: var(--color-field-950);
+  background-image:
+    radial-gradient(
+      60rem 40rem at 82% -8%,
+      rgba(108, 116, 82, 0.16),
+      transparent 60%
+    ),
+    radial-gradient(
+      55rem 45rem at 8% 12%,
+      rgba(217, 120, 42, 0.07),
+      transparent 55%
+    ),
+    radial-gradient(
+      70rem 60rem at 50% 110%,
+      rgba(144, 154, 108, 0.09),
+      transparent 60%
+    ),
+    url("/camo.svg");
+  background-size: cover, cover, cover, 460px 460px;
+  background-repeat: no-repeat, no-repeat, no-repeat, repeat;
+}
+
+/* Fine film grain to unify photos and flat panels. */
+.field-backdrop::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+::selection {
+  background: var(--color-signal);
+  color: #120e08;
+}
+
+::-webkit-scrollbar {
+  width: 11px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-field-950);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-field-700);
+  border: 3px solid var(--color-field-950);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-olive);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-signal-bright);
+  outline-offset: 2px;
+}
+
+/* ── Typography helpers ─────────────────────────────────────── */
+.font-display {
+  font-family: var(--font-display);
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 0.72rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--color-sand);
+}
+.eyebrow::before {
+  content: "";
+  width: 1.75rem;
+  height: 2px;
+  background: var(--color-signal);
+}
+
+.display-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 0.98;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+
+/* ── Photo treatment: unify all imagery into the field palette ── */
+.photo-tone {
+  filter: saturate(0.72) contrast(1.05) brightness(0.82);
+}
+.photo-tone-wrap {
+  position: relative;
+  overflow: hidden;
+  background: var(--color-field-850);
+}
+.photo-tone-wrap::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(15, 18, 12, 0) 30%,
+      rgba(15, 18, 12, 0.85) 100%
+    ),
+    linear-gradient(90deg, rgba(60, 69, 48, 0.28), rgba(15, 18, 12, 0.05));
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+
+/* ── Tactical corner brackets ───────────────────────────────── */
+.corner-frame {
+  position: relative;
+}
+.corner-frame::before,
+.corner-frame::after {
+  content: "";
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-color: var(--color-sand);
+  opacity: 0.55;
+  transition: opacity 0.3s ease;
+}
+.corner-frame::before {
+  top: 10px;
+  left: 10px;
+  border-top: 2px solid;
+  border-left: 2px solid;
+}
+.corner-frame::after {
+  bottom: 10px;
+  right: 10px;
+  border-bottom: 2px solid;
+  border-right: 2px solid;
+}
+.corner-frame:hover::before,
+.corner-frame:hover::after {
+  opacity: 1;
+  border-color: var(--color-signal-bright);
+}
+
+/* ── Panels & hairlines ─────────────────────────────────────── */
+.panel {
+  background: linear-gradient(
+    160deg,
+    rgba(32, 38, 24, 0.9),
+    rgba(20, 24, 15, 0.9)
+  );
+  border: 1px solid var(--color-hairline);
+}
+
+.hairline-grid {
+  background-image:
+    linear-gradient(var(--color-hairline) 1px, transparent 1px),
+    linear-gradient(90deg, var(--color-hairline) 1px, transparent 1px);
+  background-size: 52px 52px;
+}
+
+/* ── Scroll reveal ──────────────────────────────────────────
+   Content is fully visible by default; the hidden start state only
+   applies when scripting is available (so JS can reveal it). No-JS
+   visitors and crawlers see everything — nothing can stay invisible. */
+.reveal {
+  transition:
+    opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+@media (scripting: enabled) {
+  .reveal {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  .reveal.is-in {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
 }
