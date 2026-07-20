@@ -1,258 +1,490 @@
-import { type Locale, locales, localeNames, getTranslations } from "../i18n";
+import {
+  type Locale,
+  locales,
+  defaultLocale,
+  getTranslations,
+} from "../i18n";
+import { company } from "../company";
+import Reveal from "../../components/reveal";
+import {
+  IconFactory,
+  IconRifle,
+  IconTank,
+  IconHelmet,
+  IconPaw,
+  IconScope,
+  IconWrench,
+  IconFlask,
+  IconLayers,
+  IconAmmo,
+  IconShieldCheck,
+  IconBadge,
+  IconLock,
+  IconTruck,
+  IconRefresh,
+  IconUsers,
+  IconPhone,
+  IconMail,
+  IconPin,
+  IconUser,
+  IconArrow,
+  IconChevronDown,
+} from "../../components/icons";
 
 export function generateStaticParams() {
   return locales.map((lang) => ({ lang }));
 }
 
-export function generateMetadata({
-  params,
-}: {
-  params: Promise<{ lang: Locale }>;
-}) {
-  // We need to handle this synchronously for static generation
-  return {
-    title: "ТОО «Арсенал про Групп» — Вооружение и военная техника",
-    description:
-      "Разработка, производство, ремонт и реализация боеприпасов, вооружения и военной техники. Астана, Казахстан.",
-  };
-}
+const capIcons = [
+  IconFactory,
+  IconRifle,
+  IconTank,
+  IconHelmet,
+  IconPaw,
+  IconScope,
+  IconWrench,
+  IconFlask,
+  IconLayers,
+];
+
+const categoryMeta = [
+  { img: "/images/cat-arms.jpg", Icon: IconRifle },
+  { img: "/images/cat-ammo.jpg", Icon: IconAmmo },
+  { img: "/images/cat-armor.jpg", Icon: IconTank },
+  { img: "/images/cat-gear.jpg", Icon: IconHelmet },
+  { img: "/images/cat-k9.jpg", Icon: IconPaw },
+  { img: "/images/cat-optics.jpg", Icon: IconScope },
+];
+
+const whyIcons = [
+  IconShieldCheck,
+  IconBadge,
+  IconLock,
+  IconTruck,
+  IconRefresh,
+  IconUsers,
+];
 
 export default async function LangPage({
   params,
 }: {
-  params: Promise<{ lang: Locale }>;
+  params: Promise<{ lang: string }>;
 }) {
   const { lang } = await params;
-  const locale = locales.includes(lang) ? lang : "ru";
+  const locale = (locales as string[]).includes(lang)
+    ? (lang as Locale)
+    : defaultLocale;
   const t = getTranslations(locale);
 
   return (
     <>
-      {/* Header */}
-      <header className="bg-[var(--color-primary)] text-white">
-        <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-          <a href={`/${locale}`} className="flex items-center gap-3">
-            <img
-              src="/logo-nobg.png"
-              alt="Арсенал про Групп"
-              className="h-12 w-auto"
-            />
-            <div>
-              <h1 className="text-lg font-bold tracking-wide">
-                Арсенал про Групп
-              </h1>
-              <p className="text-xs text-gray-300 uppercase tracking-widest">
-                ТОО
-              </p>
-            </div>
-          </a>
-          <div className="flex items-center gap-6">
-            <nav className="hidden md:flex gap-8 text-sm font-medium">
-              <a
-                href="#about"
-                className="hover:text-[var(--color-accent)] transition-colors"
-              >
-                {t.nav.about}
-              </a>
-              <a
-                href="#services"
-                className="hover:text-[var(--color-accent)] transition-colors"
-              >
-                {t.nav.services}
-              </a>
+      {/* ── Hero ─────────────────────────────────────────────── */}
+      <section id="top" className="relative isolate overflow-hidden">
+        <div className="absolute inset-0 -z-10">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/images/hero.jpg"
+            alt=""
+            className="h-full w-full object-cover object-center photo-tone"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-field-950/75 via-field-950/55 to-field-950" />
+          <div className="absolute inset-0 bg-gradient-to-r from-field-950/92 via-field-950/45 to-transparent" />
+          <div className="hairline-grid absolute inset-0 opacity-30" />
+        </div>
+
+        <div className="mx-auto max-w-6xl px-5 pb-24 pt-20 sm:px-6 md:pb-32 md:pt-28">
+          <Reveal>
+            <span className="eyebrow">{t.hero.eyebrow}</span>
+          </Reveal>
+          <Reveal delay={80}>
+            <h1 className="display-title mt-6 max-w-4xl text-[2.6rem] leading-[0.95] sm:text-6xl md:text-7xl">
+              {t.hero.title1}{" "}
+              <span className="text-signal-bright">{t.hero.title2}</span>
+            </h1>
+          </Reveal>
+          <Reveal delay={160}>
+            <p className="mt-7 max-w-2xl text-base leading-relaxed text-muted sm:text-lg">
+              {t.hero.subtitle}
+            </p>
+          </Reveal>
+          <Reveal delay={240}>
+            <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
               <a
                 href="#contacts"
-                className="hover:text-[var(--color-accent)] transition-colors"
+                className="group inline-flex items-center justify-center gap-2 rounded bg-signal px-6 py-3.5 font-display text-sm uppercase tracking-wider text-[#140f08] transition-colors hover:bg-signal-bright"
               >
-                {t.nav.contacts}
+                {t.hero.ctaPrimary}
+                <IconArrow className="h-4 w-4 transition-transform group-hover:translate-x-1" />
               </a>
-            </nav>
-            {/* Language Switcher */}
-            <div className="flex gap-1 text-xs font-medium">
-              {locales.map((l) => (
-                <a
-                  key={l}
-                  href={`/${l}`}
-                  className={`px-2 py-1 rounded transition-colors ${
-                    l === locale
-                      ? "bg-[var(--color-accent)] text-[var(--color-primary)]"
-                      : "text-gray-300 hover:text-white"
-                  }`}
-                >
-                  {localeNames[l]}
-                </a>
-              ))}
+              <a
+                href="#capabilities"
+                className="inline-flex items-center justify-center gap-2 rounded border border-sand/40 px-6 py-3.5 font-display text-sm uppercase tracking-wider text-sand transition-colors hover:border-sand hover:text-paper"
+              >
+                {t.hero.ctaSecondary}
+              </a>
             </div>
-          </div>
+          </Reveal>
         </div>
-      </header>
 
-      {/* Hero */}
-      <section className="bg-gradient-to-br from-[var(--color-primary)] to-slate-800 text-white py-24 px-6">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
-            {t.hero.title1}{" "}
-            <span className="text-[var(--color-accent)]">{t.hero.title2}</span>
-          </h2>
-          <p className="text-lg text-gray-300 max-w-2xl mx-auto">
-            {t.hero.subtitle}
-          </p>
-          <a
-            href="#contacts"
-            className="inline-block mt-10 px-8 py-3 bg-[var(--color-accent)] hover:bg-[var(--color-accent-dark)] text-[var(--color-primary)] font-semibold rounded transition-colors"
-          >
-            {t.hero.cta}
-          </a>
+        <div className="pointer-events-none flex items-center justify-center pb-8">
+          <span className="flex items-center gap-2 text-[11px] uppercase tracking-[0.3em] text-faint">
+            {t.hero.scroll}
+            <IconChevronDown className="h-4 w-4 animate-bounce" />
+          </span>
         </div>
       </section>
 
-      {/* About */}
-      <section id="about" className="py-20 px-6 bg-white">
-        <div className="max-w-5xl mx-auto">
-          <SectionTitle>{t.about.title}</SectionTitle>
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div>
-              <p className="text-gray-700 leading-relaxed mb-4">
-                <strong>
-                  {locale === "en"
-                    ? "Arsenal Pro Group LLP"
-                    : locale === "kz"
-                      ? "«Арсенал про Групп» ЖШС"
-                      : "ТОО «Арсенал про Групп»"}
-                </strong>{" "}
-                — {t.about.p1.split("—")[1] || t.about.p1}
-              </p>
-              <p className="text-gray-700 leading-relaxed">{t.about.p2}</p>
-            </div>
-            <div className="bg-slate-50 rounded-xl p-8 border border-slate-200">
-              <h4 className="font-semibold text-lg mb-4 text-[var(--color-primary)]">
-                {t.about.detailsTitle}
-              </h4>
-              <ul className="space-y-2 text-sm text-gray-600">
-                <li>
-                  <span className="font-medium text-gray-800">
-                    {t.about.bin}:
-                  </span>{" "}
-                  250340019933
-                </li>
-                <li>
-                  <span className="font-medium text-gray-800">
-                    {t.about.director}:
-                  </span>{" "}
-                  {t.about.directorValue}
-                </li>
-                <li>
-                  <span className="font-medium text-gray-800">
-                    {t.about.address}:
-                  </span>{" "}
-                  {t.about.addressValue}
-                </li>
-              </ul>
-            </div>
+      {/* ── Trust band ───────────────────────────────────────── */}
+      <section className="border-y border-hairline bg-field-900/60">
+        <div className="mx-auto max-w-6xl px-5 py-16 sm:px-6">
+          <Reveal className="max-w-2xl">
+            <span className="eyebrow">{t.trust.eyebrow}</span>
+            <h2 className="display-title mt-4 text-3xl sm:text-4xl">
+              {t.trust.title}
+            </h2>
+          </Reveal>
+
+          <div className="mt-10 grid gap-px overflow-hidden rounded-lg border border-hairline bg-hairline sm:grid-cols-2 lg:grid-cols-4">
+            {t.trust.items.map((item, i) => (
+              <Reveal
+                key={item.title}
+                delay={i * 70}
+                className="bg-field-900 p-6"
+              >
+                <div className="flex h-8 w-8 items-center justify-center rounded-full border border-signal/40 text-signal-bright">
+                  <IconShieldCheck className="h-4 w-4" />
+                </div>
+                <h3 className="mt-4 font-display text-lg uppercase tracking-wide text-paper">
+                  {item.title}
+                </h3>
+                <p className="mt-2 text-sm leading-relaxed text-muted">
+                  {item.desc}
+                </p>
+              </Reveal>
+            ))}
           </div>
+
+          <div className="mt-8 grid gap-4 sm:grid-cols-3">
+            {t.trust.stats.map((s, i) => (
+              <Reveal
+                key={s.label}
+                delay={i * 70}
+                className="panel flex items-center gap-4 rounded-lg p-5"
+              >
+                <span className="font-display text-4xl font-bold text-sand">
+                  {s.value}
+                </span>
+                <span className="text-sm leading-tight text-muted">
+                  {s.label}
+                </span>
+              </Reveal>
+            ))}
+          </div>
+          {/* Owner: the stat values above are safe placeholders. Replace them
+              (e.g. years on the market, contracts fulfilled, agencies served)
+              with real, verified figures when available — in src/app/i18n.ts. */}
         </div>
       </section>
 
-      {/* Services */}
-      <section id="services" className="py-20 px-6 bg-slate-50">
-        <div className="max-w-5xl mx-auto">
-          <SectionTitle>{t.services.title}</SectionTitle>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {t.services.cards.map((card, i) => (
-              <ServiceCard
-                key={i}
-                title={card.title}
-                description={card.description}
+      {/* ── About ────────────────────────────────────────────── */}
+      <section id="about" className="scroll-mt-16">
+        <div className="mx-auto grid max-w-6xl gap-12 px-5 py-24 sm:px-6 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+          <Reveal>
+            <span className="eyebrow">{t.about.eyebrow}</span>
+            <h2 className="display-title mt-4 text-4xl sm:text-5xl">
+              {t.about.title}
+            </h2>
+            <p className="mt-6 text-base leading-relaxed text-muted">
+              {t.about.p1}
+            </p>
+            <p className="mt-4 text-base leading-relaxed text-muted">
+              {t.about.p2}
+            </p>
+          </Reveal>
+
+          <Reveal delay={120} className="relative">
+            <div className="corner-frame photo-tone-wrap aspect-[4/3] w-full rounded-lg border border-hairline">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/images/about.jpg"
+                alt=""
+                className="h-full w-full object-cover photo-tone"
               />
+            </div>
+            <dl className="panel mt-4 grid grid-cols-1 gap-4 rounded-lg p-6 sm:grid-cols-2">
+              <div>
+                <dt className="text-[11px] uppercase tracking-widest text-faint">
+                  {t.about.binLabel}
+                </dt>
+                <dd className="mt-1 font-display text-lg text-paper">
+                  {company.bin}
+                </dd>
+              </div>
+              <div>
+                <dt className="text-[11px] uppercase tracking-widest text-faint">
+                  {t.about.directorLabel}
+                </dt>
+                <dd className="mt-1 text-sm text-paper">
+                  {t.about.directorValue}
+                </dd>
+              </div>
+              <div className="sm:col-span-2">
+                <dt className="text-[11px] uppercase tracking-widest text-faint">
+                  {t.about.addressLabel}
+                </dt>
+                <dd className="mt-1 text-sm text-paper">
+                  {t.about.addressValue}
+                </dd>
+              </div>
+            </dl>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ── Capabilities ─────────────────────────────────────── */}
+      <section
+        id="capabilities"
+        className="scroll-mt-16 border-t border-hairline bg-field-900/40"
+      >
+        <div className="mx-auto max-w-6xl px-5 py-24 sm:px-6">
+          <Reveal className="max-w-2xl">
+            <span className="eyebrow">{t.capabilities.eyebrow}</span>
+            <h2 className="display-title mt-4 text-4xl sm:text-5xl">
+              {t.capabilities.title}
+            </h2>
+            <p className="mt-5 text-base leading-relaxed text-muted">
+              {t.capabilities.subtitle}
+            </p>
+          </Reveal>
+
+          <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {t.capabilities.cards.map((card, i) => {
+              const Icon = capIcons[i] ?? IconLayers;
+              return (
+                <Reveal
+                  key={card.title}
+                  delay={(i % 3) * 80}
+                  className="panel group relative rounded-lg p-6 transition-colors hover:border-sand/40"
+                >
+                  <span className="absolute right-5 top-5 font-display text-sm text-faint">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <div className="flex h-11 w-11 items-center justify-center rounded-md border border-hairline bg-field-850 text-sand transition-colors group-hover:text-signal-bright">
+                    <Icon className="h-6 w-6" />
+                  </div>
+                  <h3 className="mt-5 font-display text-lg uppercase tracking-wide text-paper">
+                    {card.title}
+                  </h3>
+                  <p className="mt-2 text-sm leading-relaxed text-muted">
+                    {card.desc}
+                  </p>
+                </Reveal>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Categories showcase ──────────────────────────────── */}
+      <section id="categories" className="scroll-mt-16">
+        <div className="mx-auto max-w-6xl px-5 py-24 sm:px-6">
+          <Reveal className="max-w-2xl">
+            <span className="eyebrow">{t.categories.eyebrow}</span>
+            <h2 className="display-title mt-4 text-4xl sm:text-5xl">
+              {t.categories.title}
+            </h2>
+            <p className="mt-5 text-base leading-relaxed text-muted">
+              {t.categories.subtitle}
+            </p>
+          </Reveal>
+
+          <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {t.categories.items.map((item, i) => {
+              const meta = categoryMeta[i];
+              const Icon = meta?.Icon ?? IconLayers;
+              return (
+                <Reveal
+                  key={item.title}
+                  delay={(i % 3) * 80}
+                  className="group corner-frame overflow-hidden rounded-lg border border-hairline"
+                >
+                  <div className="photo-tone-wrap relative aspect-[5/4] w-full">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={meta?.img}
+                      alt={item.title}
+                      className="h-full w-full object-cover photo-tone transition-transform duration-700 group-hover:scale-105"
+                    />
+                    <span className="absolute left-4 top-4 z-10 inline-flex items-center gap-1.5 rounded-full border border-sand/30 bg-field-950/70 px-3 py-1 text-[11px] uppercase tracking-widest text-sand backdrop-blur-sm">
+                      {t.categories.tag}
+                    </span>
+                    <div className="absolute inset-x-0 bottom-0 z-10 p-5">
+                      <div className="flex items-center gap-3">
+                        <span className="flex h-9 w-9 items-center justify-center rounded-md border border-sand/30 bg-field-950/70 text-signal-bright backdrop-blur-sm">
+                          <Icon className="h-5 w-5" />
+                        </span>
+                        <h3 className="font-display text-lg uppercase leading-tight tracking-wide text-paper">
+                          {item.title}
+                        </h3>
+                      </div>
+                      <p className="mt-2 text-sm leading-relaxed text-muted">
+                        {item.desc}
+                      </p>
+                    </div>
+                  </div>
+                </Reveal>
+              );
+            })}
+          </div>
+
+          <Reveal delay={120}>
+            <p className="mt-8 max-w-3xl text-sm leading-relaxed text-faint">
+              {t.categories.note}
+            </p>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ── Why us ───────────────────────────────────────────── */}
+      <section
+        id="why"
+        className="scroll-mt-16 border-t border-hairline bg-field-900/40"
+      >
+        <div className="mx-auto max-w-6xl px-5 py-24 sm:px-6">
+          <Reveal className="max-w-2xl">
+            <span className="eyebrow">{t.whyus.eyebrow}</span>
+            <h2 className="display-title mt-4 text-4xl sm:text-5xl">
+              {t.whyus.title}
+            </h2>
+          </Reveal>
+
+          <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {t.whyus.items.map((item, i) => {
+              const Icon = whyIcons[i] ?? IconShieldCheck;
+              return (
+                <Reveal
+                  key={item.title}
+                  delay={(i % 3) * 80}
+                  className="flex gap-4 rounded-lg border border-hairline bg-field-950/40 p-6"
+                >
+                  <span className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-signal/10 text-signal-bright">
+                    <Icon className="h-5 w-5" />
+                  </span>
+                  <div>
+                    <h3 className="font-display text-base uppercase tracking-wide text-paper">
+                      {item.title}
+                    </h3>
+                    <p className="mt-1.5 text-sm leading-relaxed text-muted">
+                      {item.desc}
+                    </p>
+                  </div>
+                </Reveal>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Audience ─────────────────────────────────────────── */}
+      <section id="audience" className="scroll-mt-16">
+        <div className="mx-auto max-w-6xl px-5 py-24 sm:px-6">
+          <Reveal className="max-w-2xl">
+            <span className="eyebrow">{t.audience.eyebrow}</span>
+            <h2 className="display-title mt-4 text-4xl sm:text-5xl">
+              {t.audience.title}
+            </h2>
+            <p className="mt-5 text-base leading-relaxed text-muted">
+              {t.audience.subtitle}
+            </p>
+          </Reveal>
+
+          <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {t.audience.items.map((item, i) => (
+              <Reveal
+                key={item}
+                delay={(i % 3) * 70}
+                className="group flex items-center gap-4 rounded-lg border border-hairline bg-field-900/50 p-5 transition-colors hover:border-sand/40"
+              >
+                <span className="grid h-9 w-9 place-items-center rounded-full border border-sand/30 text-signal-bright">
+                  <span className="h-1.5 w-1.5 rounded-full bg-signal-bright" />
+                </span>
+                <span className="font-display text-lg uppercase tracking-wide text-paper">
+                  {item}
+                </span>
+              </Reveal>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Contacts */}
-      <section id="contacts" className="py-20 px-6 bg-white">
-        <div className="max-w-5xl mx-auto">
-          <SectionTitle>{t.contacts.title}</SectionTitle>
-          <div className="grid md:grid-cols-2 gap-12">
-            <div className="space-y-6">
-              <ContactItem
-                icon={<PhoneIcon />}
-                label={t.contacts.phone}
-                value="8 (705) 598-14-14"
-                href="tel:+77055981414"
+      {/* ── Contacts ─────────────────────────────────────────── */}
+      <section
+        id="contacts"
+        className="scroll-mt-16 border-t border-hairline bg-field-900/40"
+      >
+        <div className="mx-auto max-w-6xl px-5 py-24 sm:px-6">
+          <Reveal className="max-w-2xl">
+            <span className="eyebrow">{t.contacts.eyebrow}</span>
+            <h2 className="display-title mt-4 text-4xl sm:text-5xl">
+              {t.contacts.title}
+            </h2>
+            <p className="mt-5 text-base leading-relaxed text-muted">
+              {t.contacts.subtitle}
+            </p>
+          </Reveal>
+
+          <div className="mt-12 grid gap-8 lg:grid-cols-2">
+            <Reveal className="flex flex-col gap-5">
+              <ContactRow
+                icon={<IconPhone className="h-5 w-5" />}
+                label={t.contacts.phoneLabel}
+                value={company.phoneDisplay}
+                href={company.phoneHref}
               />
-              <ContactItem
-                icon={<MailIcon />}
-                label={t.contacts.email}
-                value="krbegaidarov@mail.ru"
-                href="mailto:krbegaidarov@mail.ru"
+              <ContactRow
+                icon={<IconMail className="h-5 w-5" />}
+                label={t.contacts.emailLabel}
+                value={company.email}
+                href={company.emailHref}
               />
-              <ContactItem
-                icon={<MapPinIcon />}
-                label={t.contacts.address}
-                value={t.contacts.addressValue}
+              <ContactRow
+                icon={<IconPin className="h-5 w-5" />}
+                label={t.contacts.addressLabel}
+                value={t.about.addressValue}
               />
-              <ContactItem
-                icon={<UserIcon />}
-                label={t.contacts.director}
-                value={t.contacts.directorValue}
+              <ContactRow
+                icon={<IconUser className="h-5 w-5" />}
+                label={t.contacts.directorLabel}
+                value={t.about.directorValue}
               />
-            </div>
-            <div className="rounded-xl overflow-hidden border border-slate-200 h-64 md:h-auto">
+              <a
+                href={company.emailHref}
+                className="group mt-2 inline-flex items-center justify-center gap-2 self-start rounded bg-signal px-6 py-3.5 font-display text-sm uppercase tracking-wider text-[#140f08] transition-colors hover:bg-signal-bright"
+              >
+                {t.contacts.cta}
+                <IconArrow className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+              </a>
+            </Reveal>
+
+            <Reveal delay={120} className="corner-frame overflow-hidden rounded-lg border border-hairline">
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2506.711065669187!2d71.3810297116625!3d51.076883541945364!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x42458576f418fe65%3A0x38822022f1938494!2s3%2C%20Turan%20Ave%2089%2C%20Astana%20020000!5e0!3m2!1sen!2skz!4v1781798925422!5m2!1sen!2skz"
-                width="100%"
-                height="100%"
-                style={{ border: 0 }}
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
+                src={company.mapEmbed}
                 title={t.contacts.mapTitle}
+                className="h-full min-h-[22rem] w-full"
+                style={{ border: 0 }}
+                loading="lazy"
+                allowFullScreen
+                referrerPolicy="no-referrer-when-downgrade"
               />
-            </div>
+            </Reveal>
           </div>
         </div>
       </section>
-
-      {/* Footer */}
-      <footer className="bg-[var(--color-primary)] text-gray-400 py-8 px-6 mt-auto">
-        <div className="max-w-5xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4 text-sm">
-          <p>{t.footer.rights}</p>
-          <p>{t.footer.city}</p>
-        </div>
-      </footer>
     </>
   );
 }
 
-/* ─── Components ─────────────────────────────────────────── */
-
-function SectionTitle({ children }: { children: React.ReactNode }) {
-  return (
-    <h3 className="text-3xl font-bold text-[var(--color-primary)] mb-10 text-center">
-      {children}
-    </h3>
-  );
-}
-
-function ServiceCard({
-  title,
-  description,
-}: {
-  title: string;
-  description: string;
-}) {
-  return (
-    <div className="bg-white rounded-xl p-6 border border-slate-200 hover:shadow-lg hover:border-[var(--color-accent)] transition-all">
-      <h4 className="font-semibold text-[var(--color-primary)] mb-2">
-        {title}
-      </h4>
-      <p className="text-sm text-gray-600 leading-relaxed">{description}</p>
-    </div>
-  );
-}
-
-function ContactItem({
+function ContactRow({
   icon,
   label,
   value,
@@ -264,96 +496,25 @@ function ContactItem({
   href?: string;
 }) {
   return (
-    <div className="flex items-start gap-4">
-      <div className="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center text-[var(--color-accent)] shrink-0">
+    <div className="flex items-start gap-4 rounded-lg border border-hairline bg-field-950/40 p-5">
+      <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-md bg-field-850 text-sand">
         {icon}
-      </div>
+      </span>
       <div>
-        <p className="text-xs text-gray-500 uppercase tracking-wide">{label}</p>
+        <p className="text-[11px] uppercase tracking-widest text-faint">
+          {label}
+        </p>
         {href ? (
           <a
             href={href}
-            className="text-gray-800 font-medium hover:text-[var(--color-accent)] transition-colors"
+            className="mt-1 block font-display text-lg text-paper transition-colors hover:text-signal-bright"
           >
             {value}
           </a>
         ) : (
-          <p className="text-gray-800 font-medium">{value}</p>
+          <p className="mt-1 text-base text-paper">{value}</p>
         )}
       </div>
     </div>
-  );
-}
-
-/* ─── Icons (inline SVG) ─────────────────────────────────── */
-
-function PhoneIcon() {
-  return (
-    <svg
-      className="w-5 h-5"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
-      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
-    </svg>
-  );
-}
-
-function MailIcon() {
-  return (
-    <svg
-      className="w-5 h-5"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
-      <rect x="2" y="4" width="20" height="16" rx="2" />
-      <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
-    </svg>
-  );
-}
-
-function MapPinIcon() {
-  return (
-    <svg
-      className="w-5 h-5"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
-      <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
-      <circle cx="12" cy="10" r="3" />
-    </svg>
-  );
-}
-
-function UserIcon() {
-  return (
-    <svg
-      className="w-5 h-5"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
-      <circle cx="12" cy="8" r="5" />
-      <path d="M20 21a8 8 0 1 0-16 0" />
-    </svg>
   );
 }
