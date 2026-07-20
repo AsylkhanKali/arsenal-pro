@@ -7,14 +7,9 @@ import {
 import { company } from "../company";
 import Reveal from "../../components/reveal";
 import {
-  IconFactory,
   IconRifle,
-  IconTank,
   IconHelmet,
-  IconPaw,
   IconScope,
-  IconWrench,
-  IconFlask,
   IconLayers,
   IconAmmo,
   IconShieldCheck,
@@ -35,24 +30,10 @@ export function generateStaticParams() {
   return locales.map((lang) => ({ lang }));
 }
 
-const capIcons = [
-  IconFactory,
-  IconRifle,
-  IconTank,
-  IconHelmet,
-  IconPaw,
-  IconScope,
-  IconWrench,
-  IconFlask,
-  IconLayers,
-];
-
 const categoryMeta = [
   { img: "/images/cat-arms.jpg", Icon: IconRifle },
   { img: "/images/cat-ammo.jpg", Icon: IconAmmo },
-  { img: "/images/cat-armor.jpg", Icon: IconTank },
   { img: "/images/cat-gear.jpg", Icon: IconHelmet },
-  { img: "/images/cat-k9.jpg", Icon: IconPaw },
   { img: "/images/cat-optics.jpg", Icon: IconScope },
 ];
 
@@ -117,7 +98,7 @@ export default async function LangPage({
                 <IconArrow className="h-4 w-4 transition-transform group-hover:translate-x-1" />
               </a>
               <a
-                href="#capabilities"
+                href="#categories"
                 className="inline-flex items-center justify-center gap-2 rounded border border-sand/40 px-6 py-3.5 font-display text-sm uppercase tracking-wider text-sand transition-colors hover:border-sand hover:text-paper"
               >
                 {t.hero.ctaSecondary}
@@ -241,47 +222,27 @@ export default async function LangPage({
         </div>
       </section>
 
-      {/* ── Capabilities ─────────────────────────────────────── */}
-      <section
-        id="capabilities"
-        className="scroll-mt-16 border-t border-hairline bg-field-900/40"
-      >
-        <div className="mx-auto max-w-6xl px-5 py-24 sm:px-6">
-          <Reveal className="max-w-2xl">
-            <span className="eyebrow">{t.capabilities.eyebrow}</span>
-            <h2 className="display-title mt-4 text-4xl sm:text-5xl">
-              {t.capabilities.title}
-            </h2>
-            <p className="mt-5 text-base leading-relaxed text-muted">
-              {t.capabilities.subtitle}
+      {/* ── Statement band ───────────────────────────────────── */}
+      <section className="relative isolate overflow-hidden border-y border-hairline">
+        <div className="absolute inset-0 -z-10">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/images/band.jpg"
+            alt=""
+            className="h-full w-full object-cover object-center photo-tone"
+          />
+          <div className="absolute inset-0 bg-field-950/80" />
+          <div className="absolute inset-0 bg-gradient-to-r from-field-950 via-field-950/70 to-transparent" />
+          <div className="hairline-grid absolute inset-0 opacity-20" />
+        </div>
+
+        <div className="mx-auto max-w-6xl px-5 py-24 sm:px-6 md:py-32">
+          <Reveal className="max-w-3xl">
+            <span className="eyebrow">{t.hero.eyebrow}</span>
+            <p className="display-title mt-5 text-3xl leading-tight sm:text-4xl md:text-5xl">
+              {t.footer.tagline}
             </p>
           </Reveal>
-
-          <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {t.capabilities.cards.map((card, i) => {
-              const Icon = capIcons[i] ?? IconLayers;
-              return (
-                <Reveal
-                  key={card.title}
-                  delay={(i % 3) * 80}
-                  className="panel group relative rounded-lg p-6 transition-colors hover:border-sand/40"
-                >
-                  <span className="absolute right-5 top-5 font-display text-sm text-faint">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <div className="flex h-11 w-11 items-center justify-center rounded-md border border-hairline bg-field-850 text-sand transition-colors group-hover:text-signal-bright">
-                    <Icon className="h-6 w-6" />
-                  </div>
-                  <h3 className="mt-5 font-display text-lg uppercase tracking-wide text-paper">
-                    {card.title}
-                  </h3>
-                  <p className="mt-2 text-sm leading-relaxed text-muted">
-                    {card.desc}
-                  </p>
-                </Reveal>
-              );
-            })}
-          </div>
         </div>
       </section>
 
