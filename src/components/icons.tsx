@@ -19,15 +19,7 @@ function Svg({ children, ...props }: IconProps) {
   );
 }
 
-/* ── Capabilities / categories ──────────────────────────────── */
-export const IconFactory = (p: IconProps) => (
-  <Svg {...p}>
-    <path d="M3 21h18" />
-    <path d="M4 21V11l5 3V11l5 3V8l5 3v10" />
-    <path d="M9 21v-4h3v4" />
-  </Svg>
-);
-
+/* ── Categories ─────────────────────────────────────────────── */
 export const IconRifle = (p: IconProps) => (
   <Svg {...p}>
     <path d="M3 10h12" />
@@ -38,12 +30,11 @@ export const IconRifle = (p: IconProps) => (
   </Svg>
 );
 
-export const IconTank = (p: IconProps) => (
+export const IconAmmo = (p: IconProps) => (
   <Svg {...p}>
-    <path d="M3 16.5h17a0 0 0 0 1 0 0v.5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-    <path d="M5 16.5v-3h11v3" />
-    <path d="M9 13.5v-2h5v2" />
-    <path d="M14 12.5h7" />
+    <rect x="9" y="10" width="6" height="9" rx="1" />
+    <path d="M9 10l3-6 3 6" />
+    <path d="M9 13.5h6" />
   </Svg>
 );
 
@@ -55,15 +46,6 @@ export const IconHelmet = (p: IconProps) => (
   </Svg>
 );
 
-export const IconPaw = (p: IconProps) => (
-  <Svg {...p}>
-    <circle cx="6.5" cy="10" r="1.5" />
-    <circle cx="11" cy="7.5" r="1.5" />
-    <circle cx="17.5" cy="10" r="1.5" />
-    <path d="M12 12.5c-2.4 0-4.3 1.9-4.3 3.9 0 1.5 1.2 2.4 2.6 2.1.9-.2 2.5-.2 3.4 0 1.4.3 2.6-.6 2.6-2.1 0-2-1.9-3.9-4.3-3.9z" />
-  </Svg>
-);
-
 export const IconScope = (p: IconProps) => (
   <Svg {...p}>
     <circle cx="12" cy="12" r="7" />
@@ -72,31 +54,10 @@ export const IconScope = (p: IconProps) => (
   </Svg>
 );
 
-export const IconWrench = (p: IconProps) => (
-  <Svg {...p}>
-    <path d="M15 6.5a4 4 0 0 0-5.3 5.2L3.5 18v2.5H6l6.3-6.2A4 4 0 0 0 17.5 9l-2.4 2.4-2.1-2.1z" />
-  </Svg>
-);
-
-export const IconFlask = (p: IconProps) => (
-  <Svg {...p}>
-    <path d="M9 3h6M10 3v6l-5 9a1 1 0 0 0 .9 1.5h12.2A1 1 0 0 0 19 18l-5-9V3" />
-    <path d="M7.2 15h9.6" />
-  </Svg>
-);
-
 export const IconLayers = (p: IconProps) => (
   <Svg {...p}>
     <path d="M12 3l9 5-9 5-9-5z" />
     <path d="M3 13l9 5 9-5" />
-  </Svg>
-);
-
-export const IconAmmo = (p: IconProps) => (
-  <Svg {...p}>
-    <rect x="9" y="10" width="6" height="9" rx="1" />
-    <path d="M9 10l3-6 3 6" />
-    <path d="M9 13.5h6" />
   </Svg>
 );
 

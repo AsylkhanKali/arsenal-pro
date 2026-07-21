@@ -12,7 +12,6 @@ export default function SiteHeader({ locale }: { locale: Locale }) {
 
   const links = [
     { href: "#about", label: t.nav.about },
-    { href: "#capabilities", label: t.nav.capabilities },
     { href: "#categories", label: t.nav.categories },
     { href: "#contacts", label: t.nav.contacts },
   ];
