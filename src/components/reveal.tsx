@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, type ReactNode } from "react";
+import { observeReveal } from "../lib/reveal-registry";
 
 interface RevealProps {
   children: ReactNode;
@@ -9,10 +10,10 @@ interface RevealProps {
   as?: "div" | "li" | "section";
 }
 
-/** Fades + lifts children into view on scroll. Requires the `.js` class on
- *  <html> to hide anything (see globals.css), so content is never stuck
- *  invisible: elements already in view show immediately, and a timeout
- *  fallback covers browsers that don't emit an initial intersection. */
+/** Fades + lifts children into view on scroll. The hidden start state applies
+ *  only when scripting is available (see globals.css), so no-JS visitors and
+ *  crawlers always see everything. Observation is delegated to a single shared
+ *  observer — see lib/reveal-registry.ts for why that matters here. */
 export default function Reveal({
   children,
   className = "",
@@ -25,34 +26,7 @@ export default function Reveal({
   useEffect(() => {
     const el = ref.current;
     if (!el || shown) return;
-
-    if (typeof IntersectionObserver === "undefined") {
-      setShown(true);
-      return;
-    }
-
-    // Already on screen at mount → reveal now (still fades via the transition).
-    if (el.getBoundingClientRect().top < window.innerHeight * 0.92) {
-      setShown(true);
-      return;
-    }
-
-    const io = new IntersectionObserver(
-      (entries) => {
-        if (entries.some((e) => e.isIntersecting)) {
-          setShown(true);
-          io.disconnect();
-        }
-      },
-      { threshold: 0.12, rootMargin: "0px 0px -10% 0px" },
-    );
-    io.observe(el);
-    const fallback = setTimeout(() => setShown(true), 1400);
-
-    return () => {
-      io.disconnect();
-      clearTimeout(fallback);
-    };
+    return observeReveal(el, () => setShown(true));
   }, [shown]);
 
   const Tag = as as "div";

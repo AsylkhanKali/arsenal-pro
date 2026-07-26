@@ -21,7 +21,14 @@ export default function SiteFooter({ locale }: { locale: Locale }) {
           <div>
             <div className="flex items-center gap-3">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/logo-nobg.png" alt={brandName} className="h-9 w-auto" />
+              <img
+                src="/logo-nobg.png"
+                alt={brandName}
+                width={521}
+                height={479}
+                loading="lazy"
+                className="h-9 w-auto"
+              />
               <span className="font-display text-base font-semibold uppercase tracking-wide text-paper">
                 {brandName}
               </span>

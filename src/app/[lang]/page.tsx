@@ -66,6 +66,10 @@ export default async function LangPage({
           <img
             src="/images/hero.jpg"
             alt=""
+            width={2000}
+            height={1120}
+            fetchPriority="high"
+            decoding="async"
             className="h-full w-full object-cover object-center photo-tone"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-field-950/75 via-field-950/55 to-field-950" />
@@ -192,6 +196,10 @@ export default async function LangPage({
               <img
                 src="/images/about.jpg"
                 alt=""
+                width={1200}
+                height={900}
+                loading="lazy"
+                decoding="async"
                 className="h-full w-full object-cover photo-tone"
               />
             </div>
@@ -259,6 +267,10 @@ export default async function LangPage({
                     <img
                       src={meta?.img}
                       alt={item.title}
+                      width={1000}
+                      height={800}
+                      loading="lazy"
+                      decoding="async"
                       className="absolute inset-0 h-full w-full object-cover photo-tone transition-transform duration-700 group-hover:scale-105"
                     />
                     <span className="scope-mark" aria-hidden="true" />
@@ -304,6 +316,10 @@ export default async function LangPage({
             <img
               src="/images/process.jpg"
               alt=""
+              width={1000}
+              height={1250}
+              loading="lazy"
+              decoding="async"
               className="absolute inset-0 h-full w-full object-cover object-center photo-tone"
             />
           </Reveal>

@@ -218,11 +218,13 @@ body {
    Content is fully visible by default; the hidden start state only
    applies when scripting is available (so JS can reveal it). No-JS
    visitors and crawlers see everything — nothing can stay invisible. */
+/* No `will-change` here: this class is on ~44 elements and the hint is never
+   retracted, which pins that many permanent compositor layers and stalls
+   scrolling. Opacity/transform transitions are composited without it. */
 .reveal {
   transition:
     opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
     transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
-  will-change: opacity, transform;
 }
 @media (scripting: enabled) {
   .reveal {
@@ -387,6 +389,11 @@ body {
   to {
     transform: translateY(120vh);
   }
+}
+/* Toggled by scope-cursor.tsx once the hero leaves the viewport — an infinite
+   animation on an offscreen element still costs a frame every frame. */
+.hero-scan.is-paused::before {
+  animation-play-state: paused;
 }
 
 /* ── Radar ping on process step numbers ─────────────────────
