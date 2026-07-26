@@ -1,6 +1,8 @@
 import { type Locale, locales, defaultLocale, getTranslations } from "../i18n";
 import { company } from "../company";
 import Reveal from "../../components/reveal";
+import ScopeCursor from "../../components/scope-cursor";
+import StatNumber from "../../components/stat-number";
 import {
   IconRifle,
   IconHelmet,
@@ -69,7 +71,10 @@ export default async function LangPage({
           <div className="absolute inset-0 bg-gradient-to-b from-field-950/75 via-field-950/55 to-field-950" />
           <div className="absolute inset-0 bg-gradient-to-r from-field-950/92 via-field-950/45 to-transparent" />
           <div className="hairline-grid absolute inset-0 opacity-30" />
+          <div className="hero-scan" aria-hidden="true" />
         </div>
+
+        <ScopeCursor />
 
         <div className="mx-auto max-w-6xl px-5 pb-24 pt-20 sm:px-6 md:pb-32 md:pt-28">
           <Reveal>
@@ -90,14 +95,14 @@ export default async function LangPage({
             <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
               <a
                 href="#contacts"
-                className="group inline-flex items-center justify-center gap-2 rounded bg-signal px-6 py-3.5 font-display text-sm uppercase tracking-wider text-[#140f08] transition-colors hover:bg-signal-bright"
+                className="group inline-flex items-center justify-center gap-2 rounded bg-signal px-6 py-3.5 font-display text-sm uppercase tracking-wider text-[#140f08] transition hover:bg-signal-bright active:scale-[0.97]"
               >
                 {t.hero.ctaPrimary}
                 <IconArrow className="h-4 w-4 transition-transform group-hover:translate-x-1" />
               </a>
               <a
                 href="#categories"
-                className="inline-flex items-center justify-center gap-2 rounded border border-sand/40 px-6 py-3.5 font-display text-sm uppercase tracking-wider text-sand transition-colors hover:border-sand hover:text-paper"
+                className="inline-flex items-center justify-center gap-2 rounded border border-sand/40 px-6 py-3.5 font-display text-sm uppercase tracking-wider text-sand transition hover:border-sand hover:text-paper active:scale-[0.97]"
               >
                 {t.hero.ctaSecondary}
               </a>
@@ -151,7 +156,7 @@ export default async function LangPage({
                 className="panel flex items-center gap-4 rounded-lg p-5"
               >
                 <span className="font-display text-4xl font-bold text-sand">
-                  {s.value}
+                  <StatNumber value={s.value} />
                 </span>
                 <span className="text-sm leading-tight text-muted">
                   {s.label}
@@ -256,6 +261,8 @@ export default async function LangPage({
                       alt={item.title}
                       className="absolute inset-0 h-full w-full object-cover photo-tone transition-transform duration-700 group-hover:scale-105"
                     />
+                    <span className="scope-mark" aria-hidden="true" />
+                    <span className="scope-scanline" aria-hidden="true" />
                     <span className="absolute left-4 top-4 z-10 inline-flex items-center gap-1.5 rounded-full border border-sand/30 bg-field-950/70 px-3 py-1 text-[11px] uppercase tracking-widest text-sand backdrop-blur-sm">
                       {t.categories.tag}
                     </span>
@@ -326,7 +333,7 @@ export default async function LangPage({
                       className="absolute bottom-0 left-[1.375rem] top-12 w-px bg-hairline"
                     />
                   ) : null}
-                  <span className="relative z-10 grid h-11 w-11 shrink-0 place-items-center rounded-full border border-sand/30 bg-field-950 font-display text-sm text-sand">
+                  <span className="step-badge relative z-10 grid h-11 w-11 shrink-0 place-items-center rounded-full border border-sand/30 bg-field-950 font-display text-sm text-sand">
                     {String(i + 1).padStart(2, "0")}
                   </span>
                   <div className="pt-2">
@@ -471,7 +478,7 @@ export default async function LangPage({
               />
               <a
                 href={company.emailHref}
-                className="group mt-2 inline-flex items-center justify-center gap-2 self-start rounded bg-signal px-6 py-3.5 font-display text-sm uppercase tracking-wider text-[#140f08] transition-colors hover:bg-signal-bright"
+                className="group mt-2 inline-flex items-center justify-center gap-2 self-start rounded bg-signal px-6 py-3.5 font-display text-sm uppercase tracking-wider text-[#140f08] transition hover:bg-signal-bright active:scale-[0.97]"
               >
                 {t.contacts.cta}
                 <IconArrow className="h-4 w-4 transition-transform group-hover:translate-x-1" />
