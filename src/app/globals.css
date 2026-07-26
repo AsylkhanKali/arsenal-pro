@@ -348,6 +348,36 @@ body {
 .group:hover .scope-scanline::before {
   animation: scope-scan 1.1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
+
+/* Touch devices never hover, so the card's target-lock would otherwise never
+   fire at all. Run it once as each card arrives instead, and let the crosshair
+   retire afterwards rather than leaving permanent chrome on every card. */
+@media (hover: none) {
+  .reveal.is-in .scope-scanline::before {
+    animation: scope-scan 1.1s cubic-bezier(0.22, 1, 0.36, 1) 0.2s forwards;
+  }
+  .reveal.is-in .scope-mark {
+    animation: scope-lock 2.4s cubic-bezier(0.22, 1, 0.36, 1) 0.15s forwards;
+  }
+}
+@keyframes scope-lock {
+  0% {
+    opacity: 0;
+    transform: scale(1.4) rotate(45deg);
+  }
+  22% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+  70% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1) rotate(0deg);
+  }
+}
 @keyframes scope-scan {
   0% {
     opacity: 1;
@@ -565,21 +595,13 @@ body {
   color: var(--color-sand);
 }
 
-/* Narrow screens: a real scrollable strip beats a marquee — dragging to
-   compare sizes is better than waiting for the round you want to come past. */
+/* Narrow screens keep the marquee — on a device with no hover at all it is one
+   of the few things on the page that actually moves. Tighter and a little
+   faster, since far less of the track is visible at once. */
 @media (max-width: 640px) {
-  .cal-ribbon {
-    overflow-x: auto;
-    -webkit-mask-image: none;
-    mask-image: none;
-  }
   .cal-track {
-    animation: none;
+    animation-duration: 45s;
     gap: 2rem;
-    padding-inline-end: 1.25rem;
-  }
-  .cal-dupe {
-    display: none;
   }
 }
 
@@ -660,6 +682,8 @@ body {
     transform: none;
   }
   .group:hover .scope-scanline::before,
+  .reveal.is-in .scope-scanline::before,
+  .reveal.is-in .scope-mark,
   .reveal.is-in .step-badge::after {
     animation: none;
   }

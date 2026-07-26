@@ -2,7 +2,6 @@ import { type Locale, locales, defaultLocale, getTranslations } from "../i18n";
 import { company } from "../company";
 import Reveal from "../../components/reveal";
 import ScopeCursor from "../../components/scope-cursor";
-import StatNumber from "../../components/stat-number";
 import ExplodedOptic from "../../components/exploded-optic";
 import OpticPlate from "../../components/optic-plate";
 import CaliberRibbon from "../../components/caliber-ribbon";
@@ -164,7 +163,7 @@ export default async function LangPage({
                 className="panel flex items-center gap-4 rounded-lg p-5"
               >
                 <span className="font-display text-4xl font-bold text-sand">
-                  <StatNumber value={s.value} />
+                  {s.value}
                 </span>
                 <span className="text-sm leading-tight text-muted">
                   {s.label}
