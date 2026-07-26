@@ -16,32 +16,40 @@ export default function ExplodedOptic({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     const el = ref.current;
-    const section = el?.closest("section");
-    if (!el || !section) return;
+    if (!el) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
+    // Progress is measured against the plate itself, not the surrounding
+    // section. On phones the section stacks to roughly four times the plate's
+    // height, so keying off the section meant the assembly was still running
+    // long after the plate had scrolled off the top of the screen — it never
+    // finished anywhere the reader could see it.
     let top = 0;
     let height = 1;
+    let startAt = 0.75;
     const measure = () => {
-      let node: HTMLElement | null = section as HTMLElement;
+      let node: HTMLElement | null = el;
       top = 0;
       while (node) {
         top += node.offsetTop;
         node = node.offsetParent as HTMLElement | null;
       }
-      height = (section as HTMLElement).offsetHeight || 1;
+      height = el.offsetHeight || 1;
+      // Phones start almost as soon as the plate appears: there is far less
+      // room and the plate passes through the viewport much faster.
+      startAt = window.matchMedia("(max-width: 640px)").matches ? 0.95 : 0.75;
     };
 
     let raf = 0;
     const update = () => {
       raf = 0;
-      // Starts once the section top has climbed to mid-viewport, so the reader
-      // is looking at the section before anything moves, and finishes while the
-      // plate is still centred on screen. Triggering any earlier means the
-      // assembly plays while the section is only just edging into view and is
-      // easy to scroll straight past.
-      const travelled = window.scrollY + window.innerHeight * 0.45 - top;
-      const p = travelled / (height * 0.6);
+      const vh = window.innerHeight;
+      // Begins as the plate's top edge rises past startAt of the viewport, and
+      // completes as its centre reaches the upper-middle — always while the
+      // whole plate is still on screen.
+      const from = top - vh * startAt;
+      const to = top + height / 2 - vh * 0.45;
+      const p = (window.scrollY - from) / Math.max(to - from, 1);
       const assembly = p < 0 ? 0 : p > 1 ? 1 : p;
       el.style.setProperty("--assembly", assembly.toFixed(3));
     };
