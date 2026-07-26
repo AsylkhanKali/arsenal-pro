@@ -220,29 +220,6 @@ export default async function LangPage({
         </div>
       </section>
 
-      {/* ── Statement band ───────────────────────────────────── */}
-      {/* Deliberately typographic: a quiet beat between two photo-led sections.
-          A wide photo band doesn't work here — any 16/9 crop slices the subject,
-          and bright stock fights the dark palette. */}
-      <section className="relative isolate overflow-hidden border-y border-hairline bg-field-900/50">
-        <div
-          className="hairline-grid absolute inset-0 opacity-25"
-          aria-hidden="true"
-        />
-        <div className="mx-auto max-w-6xl px-5 py-20 sm:px-6 md:py-24">
-          <Reveal className="max-w-4xl">
-            <span className="eyebrow">{t.band.eyebrow}</span>
-            <p className="display-title mt-5 text-3xl leading-[1.12] sm:text-4xl md:text-[2.75rem]">
-              {t.band.statement}
-            </p>
-            <span
-              className="mt-8 block h-px w-24 bg-signal"
-              aria-hidden="true"
-            />
-          </Reveal>
-        </div>
-      </section>
-
       {/* ── Categories showcase ──────────────────────────────── */}
       <section id="categories" className="scroll-mt-16">
         <div className="mx-auto max-w-6xl px-5 py-24 sm:px-6">
