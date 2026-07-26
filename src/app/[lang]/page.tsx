@@ -3,6 +3,8 @@ import { company } from "../company";
 import Reveal from "../../components/reveal";
 import ScopeCursor from "../../components/scope-cursor";
 import StatNumber from "../../components/stat-number";
+import ExplodedOptic from "../../components/exploded-optic";
+import OpticPlate from "../../components/optic-plate";
 import {
   IconRifle,
   IconHelmet,
@@ -308,20 +310,14 @@ export default async function LangPage({
       {/* ── Process ──────────────────────────────────────────── */}
       <section id="process" className="scroll-mt-16 border-t border-hairline">
         <div className="mx-auto grid max-w-6xl gap-10 px-5 py-24 sm:px-6 lg:grid-cols-[0.72fr_1.28fr] lg:gap-14">
-          {/* Photo column stretches to the text column's height, so there's no
-              dead space beside it. The portrait source is centred against a dark
-              surround, so cropping the sides is safe at any tall ratio. */}
-          <Reveal className="corner-frame photo-tone-wrap relative min-h-[22rem] rounded-lg border border-hairline sm:min-h-[26rem] lg:min-h-[30rem]">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/images/process.jpg"
-              alt=""
-              width={1000}
-              height={1250}
-              loading="lazy"
-              decoding="async"
-              className="absolute inset-0 h-full w-full object-cover object-center photo-tone"
-            />
+          {/* Parts plate instead of a stock photo: the optic comes apart into
+              separately sourced components and seats into one unit as the steps
+              scroll past, which is the supply story the copy tells. Column
+              stretches to the text column's height. */}
+          <Reveal className="corner-frame relative min-h-[24rem] rounded-lg border border-hairline bg-field-950/30 sm:min-h-[28rem] lg:min-h-[32rem]">
+            <ExplodedOptic>
+              <OpticPlate />
+            </ExplodedOptic>
           </Reveal>
 
           <div>

@@ -426,9 +426,82 @@ body {
   }
 }
 
+/* ── Exploded optic plate (#process) ────────────────────────
+   One custom property drives every part: --assembly 0 = apart, 1 = seated.
+   Defaults to 1 so the unit reads as complete with no JS at all. Absolute
+   positioning rather than height:100% — the column only has a min-height, so
+   a percentage height would have nothing definite to resolve against. */
+.eo-stage {
+  --assembly: 1;
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem;
+}
+.eo-plate {
+  height: 100%;
+  width: auto;
+  max-width: 100%;
+  color: var(--color-sand);
+}
+.eo-datum {
+  color: var(--color-olive-light);
+  opacity: 0.4;
+}
+/* On an SVG element a px length resolves to user units, so these offsets are
+   in viewBox coordinates. */
+.eo-part {
+  transform: translate(
+    calc(var(--dx, 0px) * (1 - var(--assembly))),
+    calc(var(--dy, 0px) * (1 - var(--assembly)))
+  );
+}
+.eo-eyepiece {
+  --dy: -150px;
+}
+.eo-magring {
+  --dy: -105px;
+}
+.eo-tube-upper {
+  --dy: -55px;
+}
+.eo-turret {
+  --dx: -95px;
+}
+.eo-tube-lower {
+  --dy: 55px;
+}
+.eo-bell {
+  --dy: 100px;
+}
+.eo-lens {
+  --dy: 150px;
+}
+.eo-rings {
+  --dx: 95px;
+}
+/* Callouts belong to the exploded reading; they retire as the parts seat. */
+.eo-tag {
+  color: var(--color-signal-bright);
+  opacity: calc(1 - var(--assembly));
+}
+.eo-tag text {
+  fill: currentColor;
+  stroke: none;
+  font-family: var(--font-display);
+  font-size: 15px;
+  letter-spacing: 0.06em;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+  /* ExplodedOptic attaches nothing in this mode; pin the assembled state. */
+  .eo-stage {
+    --assembly: 1;
   }
   .reveal {
     opacity: 1;
