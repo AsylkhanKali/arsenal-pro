@@ -21,12 +21,11 @@ export default function OpticPlate() {
       strokeLinejoin="round"
       aria-hidden="true"
     >
-      {/* Optical axis + datum brackets: always visible, holds the composition
-          together while the parts are apart. */}
+      {/* Optical axis: always visible, holds the composition together while the
+          parts are apart. The container already carries corner brackets, so
+          extra datum ticks in here just read as stray marks. */}
       <g className="eo-datum">
         <path d="M150 30v500" strokeDasharray="2 7" />
-        <path d="M60 40h14M60 40v10M60 520h14M60 520v-10" />
-        <path d="M226 274h14M240 274v40M226 314h14" />
       </g>
 
       {/* 01 — eyepiece */}
@@ -60,9 +59,11 @@ export default function OpticPlate() {
         <path d="M108 300v10M114 300v10M120 300v10" />
         <circle cx="150" cy="305" r="8" />
         <path d="M150 297v6" />
+        {/* Kept tight to the knob: this group travels 60 units left, and the
+            label has to stay inside the viewBox once it gets there. */}
         <g className="eo-tag">
-          <path d="M98 305H74" />
-          <text x="68" y="309" textAnchor="end">
+          <path d="M98 305H86" />
+          <text x="82" y="309" textAnchor="end">
             02
           </text>
         </g>
@@ -79,9 +80,10 @@ export default function OpticPlate() {
         <path d="M128 252v16M172 252v16" />
         <rect x="122" y="330" width="56" height="16" rx="2" />
         <path d="M128 330v16M172 330v16" />
+        {/* Likewise: travels 60 units right, so the label sits close in. */}
         <g className="eo-tag">
-          <path d="M182 260h26" />
-          <text x="214" y="264">
+          <path d="M182 260h16" />
+          <text x="204" y="264">
             03
           </text>
         </g>

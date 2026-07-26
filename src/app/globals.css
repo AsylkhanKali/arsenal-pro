@@ -497,8 +497,10 @@ body {
 .eo-tube-upper {
   --dy: -55px;
 }
+/* Horizontal offsets stay at 60: at 95 the callouts that ride along with these
+   two groups were pushed outside the viewBox and clipped away entirely. */
 .eo-turret {
-  --dx: -95px;
+  --dx: -60px;
 }
 .eo-tube-lower {
   --dy: 55px;
@@ -510,7 +512,7 @@ body {
   --dy: 150px;
 }
 .eo-rings {
-  --dx: 95px;
+  --dx: 60px;
 }
 /* Callouts belong to the exploded reading; they retire as the parts seat. */
 .eo-tag {
