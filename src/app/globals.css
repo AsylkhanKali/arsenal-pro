@@ -495,6 +495,94 @@ body {
   letter-spacing: 0.06em;
 }
 
+/* ── Caliber ribbon (#categories) ───────────────────────────
+   Every round is sized from its real millimetre figures through one shared
+   --mm scale, so the relative proportions stay honest — that comparison is
+   the entire point of the exhibit. */
+.cal-ribbon {
+  --mm: 1.55px;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent,
+    #000 5%,
+    #000 95%,
+    transparent
+  );
+  mask-image: linear-gradient(
+    90deg,
+    transparent,
+    #000 5%,
+    #000 95%,
+    transparent
+  );
+}
+.cal-track {
+  display: flex;
+  align-items: flex-end;
+  gap: 2.75rem;
+  width: max-content;
+  animation: cal-drift 90s linear infinite;
+}
+@keyframes cal-drift {
+  to {
+    transform: translateX(-50%);
+  }
+}
+/* Slow enough to read as an exhibit; any faster and it becomes a banner ad. */
+.cal-ribbon:hover .cal-track,
+.cal-ribbon:focus-within .cal-track,
+.cal-ribbon.is-paused .cal-track {
+  animation-play-state: paused;
+}
+.cal-round {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  color: var(--color-sand-dim);
+  transition: color 0.25s ease;
+}
+.cal-round:hover {
+  color: var(--color-signal-bright);
+}
+.cal-label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-paper);
+}
+.cal-oal {
+  font-size: 0.66rem;
+  letter-spacing: 0.1em;
+  color: var(--color-faint);
+  transition: color 0.25s ease;
+}
+.cal-round:hover .cal-oal {
+  color: var(--color-sand);
+}
+
+/* Narrow screens: a real scrollable strip beats a marquee — dragging to
+   compare sizes is better than waiting for the round you want to come past. */
+@media (max-width: 640px) {
+  .cal-ribbon {
+    overflow-x: auto;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+  .cal-track {
+    animation: none;
+    gap: 2rem;
+    padding-inline-end: 1.25rem;
+  }
+  .cal-dupe {
+    display: none;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -502,6 +590,16 @@ body {
   /* ExplodedOptic attaches nothing in this mode; pin the assembled state. */
   .eo-stage {
     --assembly: 1;
+  }
+  /* Ribbon stops drifting and becomes scrollable instead. */
+  .cal-ribbon {
+    overflow-x: auto;
+  }
+  .cal-track {
+    animation: none;
+  }
+  .cal-dupe {
+    display: none;
   }
   .reveal {
     opacity: 1;

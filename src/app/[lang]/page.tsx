@@ -5,6 +5,7 @@ import ScopeCursor from "../../components/scope-cursor";
 import StatNumber from "../../components/stat-number";
 import ExplodedOptic from "../../components/exploded-optic";
 import OpticPlate from "../../components/optic-plate";
+import CaliberRibbon from "../../components/caliber-ribbon";
 import {
   IconRifle,
   IconHelmet,
@@ -298,6 +299,13 @@ export default async function LangPage({
               );
             })}
           </div>
+
+          {/* True-relative-scale reference exhibit. It sits directly above the
+              note about nomenclature being supplied on request, so it reads as
+              a scale comparison rather than as a product list. */}
+          <Reveal delay={80} className="mt-12">
+            <CaliberRibbon />
+          </Reveal>
 
           <Reveal delay={120}>
             <p className="mt-8 max-w-3xl text-sm leading-relaxed text-faint">
