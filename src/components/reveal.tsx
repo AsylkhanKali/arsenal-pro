@@ -60,7 +60,14 @@ export default function Reveal({
     <Tag
       ref={ref as React.RefObject<HTMLDivElement>}
       className={`reveal ${shown ? "is-in" : ""} ${className}`}
-      style={delay ? { transitionDelay: `${delay}ms` } : undefined}
+      style={
+        delay
+          ? ({
+              transitionDelay: `${delay}ms`,
+              "--reveal-delay": `${delay}ms`,
+            } as React.CSSProperties)
+          : undefined
+      }
     >
       {children}
     </Tag>
