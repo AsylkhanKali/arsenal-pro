@@ -6,6 +6,7 @@ import StatNumber from "../../components/stat-number";
 import ExplodedOptic from "../../components/exploded-optic";
 import OpticPlate from "../../components/optic-plate";
 import CaliberRibbon from "../../components/caliber-ribbon";
+import VerifySeal from "../../components/verify-seal";
 import {
   IconRifle,
   IconHelmet,
@@ -387,15 +388,24 @@ export default async function LangPage({
         className="scroll-mt-16 border-t border-hairline bg-field-900/40"
       >
         <div className="mx-auto max-w-6xl px-5 py-24 sm:px-6">
-          <Reveal className="max-w-2xl">
-            <span className="eyebrow">{t.whyus.eyebrow}</span>
-            <h2 className="display-title mt-4 text-4xl sm:text-5xl">
-              {t.whyus.title}
-            </h2>
-          </Reveal>
+          {/* The heading is capped at max-w-2xl, which leaves the right of this
+              row genuinely empty — the seal goes there rather than behind any
+              text. */}
+          <div className="flex items-start justify-between gap-10">
+            <Reveal className="max-w-2xl">
+              <span className="eyebrow">{t.whyus.eyebrow}</span>
+              <h2 className="display-title mt-4 text-4xl sm:text-5xl">
+                {t.whyus.title}
+              </h2>
+            </Reveal>
+            <Reveal delay={120} className="hidden shrink-0 sm:block">
+              <VerifySeal className="h-28 w-28 text-sand-dim lg:h-36 lg:w-36" />
+            </Reveal>
+          </div>
 
           {/* Hairline-ruled list rather than boxed cards — same content, different
-              texture from the photo grid above it. */}
+              texture from the photo grid above it. Each rule draws itself in as
+              the row arrives, like a line being ruled onto a form. */}
           <div className="mt-10 grid gap-x-14 sm:grid-cols-2">
             {t.whyus.items.map((item, i) => {
               const Icon = whyIcons[i] ?? IconShieldCheck;
@@ -403,7 +413,7 @@ export default async function LangPage({
                 <Reveal
                   key={item.title}
                   delay={(i % 2) * 80}
-                  className="flex items-start gap-5 border-t border-hairline py-7"
+                  className="rule-row relative flex items-start gap-5 py-7"
                 >
                   <Icon className="mt-1 h-6 w-6 shrink-0 text-signal-bright" />
                   <div>
@@ -421,37 +431,62 @@ export default async function LangPage({
               );
             })}
           </div>
+
+          {/* On phones there's no room for the seal beside the heading without
+              crushing it, so it closes the section instead — a stamp at the foot
+              of the form rather than a mark in its margin. */}
+          <Reveal delay={80} className="mt-12 flex justify-center sm:hidden">
+            <VerifySeal className="h-24 w-24 text-sand-dim" />
+          </Reveal>
         </div>
       </section>
 
       {/* ── Audience ─────────────────────────────────────────── */}
       <section id="audience" className="scroll-mt-16">
-        <div className="mx-auto max-w-6xl px-5 py-24 sm:px-6">
-          <Reveal className="max-w-2xl">
-            <span className="eyebrow">{t.audience.eyebrow}</span>
-            <h2 className="display-title mt-4 text-4xl sm:text-5xl">
-              {t.audience.title}
-            </h2>
-            <p className="mt-5 text-base leading-relaxed text-muted">
-              {t.audience.subtitle}
-            </p>
+        {/* Photo on the left, names on the right. The other photo sections put
+            their image on the right (#about) or use a drawing (#process), so
+            this reads as its own shape rather than a third repeat. */}
+        <div className="mx-auto grid max-w-6xl gap-10 px-5 py-24 sm:px-6 lg:grid-cols-[0.78fr_1.22fr] lg:gap-14">
+          <Reveal className="corner-frame photo-tone-wrap relative min-h-[20rem] rounded-lg border border-hairline lg:min-h-full">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/images/process.jpg"
+              alt=""
+              width={1000}
+              height={1250}
+              loading="lazy"
+              decoding="async"
+              className="absolute inset-0 h-full w-full object-cover object-center photo-tone"
+            />
           </Reveal>
 
-          {/* Flowing chips keep this section light — it's a list of names, it
-              doesn't need six equally-weighted panels. */}
-          <div className="mt-10 flex flex-wrap gap-3">
-            {t.audience.items.map((item, i) => (
-              <Reveal
-                key={item}
-                delay={(i % 3) * 70}
-                className="inline-flex items-center gap-2.5 rounded-full border border-hairline bg-field-900/50 px-5 py-3 transition-colors hover:border-sand/40"
-              >
-                <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-signal-bright" />
-                <span className="font-display text-sm uppercase tracking-wide text-paper sm:text-base">
-                  {item}
-                </span>
-              </Reveal>
-            ))}
+          <div>
+            <Reveal>
+              <span className="eyebrow">{t.audience.eyebrow}</span>
+              <h2 className="display-title mt-4 text-4xl sm:text-5xl">
+                {t.audience.title}
+              </h2>
+              <p className="mt-5 text-base leading-relaxed text-muted">
+                {t.audience.subtitle}
+              </p>
+            </Reveal>
+
+            {/* Flowing chips keep this side light — it's a list of names, it
+                doesn't need six equally-weighted panels. */}
+            <div className="mt-10 flex flex-wrap gap-3">
+              {t.audience.items.map((item, i) => (
+                <Reveal
+                  key={item}
+                  delay={(i % 3) * 70}
+                  className="inline-flex items-center gap-2.5 rounded-full border border-hairline bg-field-900/50 px-5 py-3 transition-colors hover:border-sand/40"
+                >
+                  <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-signal-bright" />
+                  <span className="font-display text-sm uppercase tracking-wide text-paper sm:text-base">
+                    {item}
+                  </span>
+                </Reveal>
+              ))}
+            </div>
           </div>
         </div>
       </section>

@@ -11,7 +11,7 @@ Keep the same file names and the site will pick them up automatically:
 | --------------- | --------------------------- | ---------------- | ------------ |
 | hero.jpg        | special-forces operator     | Hero background  | —            |
 | about.jpg       | operator in tactical kit    | About            | 30687129     |
-| process.jpg     | operator walking, low-key   | How we work      | 11450701     |
+| process.jpg     | operator walking, low-key   | Who we work with | 11450701     |
 | cat-arms.jpg    | modern rifle                | Categories       | —            |
 | cat-ammo.jpg    | ammunition / cartridges     | Categories       | —            |
 | cat-gear.jpg    | plate carrier / body armor  | Categories       | —            |
@@ -23,4 +23,6 @@ Recommended sizes: hero ≈ 2000×1120, about ≈ 1200×900 (4:3), process ≈ 1
 (4:5 portrait), categories ≈ 1000×800 (JPEG, optimized).
 
 `process.jpg` is deliberately low-key — it sits in a column that stretches to the
-text height, so a dark, centred subject crops safely at any tall ratio.
+text height, so a dark, centred subject crops safely at any tall ratio. It moved
+from "How we work" to "Who we work with" when the process column became the
+exploded optic drawing; the file name is now historical.
