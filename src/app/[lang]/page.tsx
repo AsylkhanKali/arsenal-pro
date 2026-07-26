@@ -3,6 +3,9 @@ import { company } from "../company";
 import Reveal from "../../components/reveal";
 import ScopeCursor from "../../components/scope-cursor";
 import StatNumber from "../../components/stat-number";
+import ExplodedOptic from "../../components/exploded-optic";
+import OpticPlate from "../../components/optic-plate";
+import CaliberRibbon from "../../components/caliber-ribbon";
 import {
   IconRifle,
   IconHelmet,
@@ -66,6 +69,10 @@ export default async function LangPage({
           <img
             src="/images/hero.jpg"
             alt=""
+            width={2000}
+            height={1120}
+            fetchPriority="high"
+            decoding="async"
             className="h-full w-full object-cover object-center photo-tone"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-field-950/75 via-field-950/55 to-field-950" />
@@ -192,6 +199,10 @@ export default async function LangPage({
               <img
                 src="/images/about.jpg"
                 alt=""
+                width={1200}
+                height={900}
+                loading="lazy"
+                decoding="async"
                 className="h-full w-full object-cover photo-tone"
               />
             </div>
@@ -259,6 +270,10 @@ export default async function LangPage({
                     <img
                       src={meta?.img}
                       alt={item.title}
+                      width={1000}
+                      height={800}
+                      loading="lazy"
+                      decoding="async"
                       className="absolute inset-0 h-full w-full object-cover photo-tone transition-transform duration-700 group-hover:scale-105"
                     />
                     <span className="scope-mark" aria-hidden="true" />
@@ -285,6 +300,13 @@ export default async function LangPage({
             })}
           </div>
 
+          {/* True-relative-scale reference exhibit. It sits directly above the
+              note about nomenclature being supplied on request, so it reads as
+              a scale comparison rather than as a product list. */}
+          <Reveal delay={80} className="mt-12">
+            <CaliberRibbon />
+          </Reveal>
+
           <Reveal delay={120}>
             <p className="mt-8 max-w-3xl text-sm leading-relaxed text-faint">
               {t.categories.note}
@@ -296,16 +318,14 @@ export default async function LangPage({
       {/* ── Process ──────────────────────────────────────────── */}
       <section id="process" className="scroll-mt-16 border-t border-hairline">
         <div className="mx-auto grid max-w-6xl gap-10 px-5 py-24 sm:px-6 lg:grid-cols-[0.72fr_1.28fr] lg:gap-14">
-          {/* Photo column stretches to the text column's height, so there's no
-              dead space beside it. The portrait source is centred against a dark
-              surround, so cropping the sides is safe at any tall ratio. */}
-          <Reveal className="corner-frame photo-tone-wrap relative min-h-[22rem] rounded-lg border border-hairline sm:min-h-[26rem] lg:min-h-[30rem]">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/images/process.jpg"
-              alt=""
-              className="absolute inset-0 h-full w-full object-cover object-center photo-tone"
-            />
+          {/* Parts plate instead of a stock photo: the optic comes apart into
+              separately sourced components and seats into one unit as the steps
+              scroll past, which is the supply story the copy tells. Column
+              stretches to the text column's height. */}
+          <Reveal className="corner-frame relative min-h-[24rem] rounded-lg border border-hairline bg-field-950/30 sm:min-h-[28rem] lg:min-h-[32rem]">
+            <ExplodedOptic>
+              <OpticPlate />
+            </ExplodedOptic>
           </Reveal>
 
           <div>

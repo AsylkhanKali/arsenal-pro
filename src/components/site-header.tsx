@@ -24,6 +24,8 @@ export default function SiteHeader({ locale }: { locale: Locale }) {
           <img
             src="/logo-nobg.png"
             alt={brandName}
+            width={521}
+            height={479}
             className="h-9 w-auto sm:h-10"
           />
           <span className="flex flex-col leading-none">
