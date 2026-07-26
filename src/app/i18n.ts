@@ -75,6 +75,13 @@ export interface Translations {
     items: TitleDesc[];
     note: string;
   };
+  band: { eyebrow: string; statement: string };
+  process: {
+    eyebrow: string;
+    title: string;
+    subtitle: string;
+    steps: TitleDesc[];
+  };
   whyus: {
     eyebrow: string;
     title: string;
@@ -192,6 +199,35 @@ const ru: Translations = {
       },
     ],
     note: "Номенклатура и технические характеристики предоставляются по запросу для уполномоченных государственных заказчиков.",
+  },
+  band: {
+    eyebrow: "Работаем по государственному оборонному заказу",
+    statement:
+      "Поставка под конкретную задачу — от согласования спецификации до приёмки на месте.",
+  },
+  process: {
+    eyebrow: "Как мы работаем",
+    title: "От заявки до приёмки",
+    subtitle:
+      "Прозрачный порядок работы с государственным заказчиком на каждом этапе поставки.",
+    steps: [
+      {
+        title: "Заявка и техзадание",
+        desc: "Принимаем заявку, уточняем номенклатуру, объёмы и требования по срокам.",
+      },
+      {
+        title: "Подбор и согласование",
+        desc: "Подбираем позиции у проверенных производителей, согласуем спецификацию и цену.",
+      },
+      {
+        title: "Поставка и логистика",
+        desc: "Оформляем документы, организуем доставку и таможенное сопровождение.",
+      },
+      {
+        title: "Приёмка и сопровождение",
+        desc: "Передаём поставку по акту и остаёмся на связи по гарантии и следующим заказам.",
+      },
+    ],
   },
   whyus: {
     eyebrow: "Гарантии",
@@ -344,6 +380,35 @@ const kz: Translations = {
       },
     ],
     note: "Номенклатура мен техникалық сипаттамалар уәкілетті мемлекеттік тапсырыс берушілерге сұраныс бойынша ұсынылады.",
+  },
+  band: {
+    eyebrow: "Мемлекеттік қорғаныс тапсырысы бойынша жұмыс істейміз",
+    statement:
+      "Нақты тапсырмаға сай жеткізу — ерекшелікті келісуден бастап орнында қабылдауға дейін.",
+  },
+  process: {
+    eyebrow: "Қалай жұмыс істейміз",
+    title: "Өтінімнен қабылдауға дейін",
+    subtitle:
+      "Жеткізілімнің әр кезеңінде мемлекеттік тапсырыс берушімен жұмыстың айқын тәртібі.",
+    steps: [
+      {
+        title: "Өтінім және техтапсырма",
+        desc: "Өтінімді қабылдап, номенклатура, көлем мен мерзім талаптарын нақтылаймыз.",
+      },
+      {
+        title: "Іріктеу және келісу",
+        desc: "Тексерілген өндірушілерден позицияларды іріктеп, ерекшелік пен бағаны келісеміз.",
+      },
+      {
+        title: "Жеткізу және логистика",
+        desc: "Құжаттарды дайындап, жеткізу мен кедендік сүйемелдеуді ұйымдастырамыз.",
+      },
+      {
+        title: "Қабылдау және сүйемелдеу",
+        desc: "Жеткізілімді акт бойынша тапсырып, кепілдік пен келесі тапсырыстар бойынша байланыста боламыз.",
+      },
+    ],
   },
   whyus: {
     eyebrow: "Кепілдіктер",
@@ -498,6 +563,35 @@ const en: Translations = {
     ],
     note: "Product range and technical specifications are provided on request to authorized government customers.",
   },
+  band: {
+    eyebrow: "Working under the state defense order",
+    statement:
+      "Supply built around the actual requirement — from agreeing the specification to acceptance on site.",
+  },
+  process: {
+    eyebrow: "How we work",
+    title: "From request to acceptance",
+    subtitle:
+      "A transparent order of work with government customers at every stage of the supply.",
+    steps: [
+      {
+        title: "Request & specification",
+        desc: "We take the request and clarify the product range, volumes and delivery timelines.",
+      },
+      {
+        title: "Sourcing & approval",
+        desc: "We source from vetted manufacturers and agree the specification and price.",
+      },
+      {
+        title: "Supply & logistics",
+        desc: "We handle the paperwork, delivery and customs support.",
+      },
+      {
+        title: "Acceptance & support",
+        desc: "We hand over against a formal record and stay available for warranty and repeat orders.",
+      },
+    ],
+  },
   whyus: {
     eyebrow: "Guarantees",
     title: "Why Arsenal Pro Group",
@@ -650,6 +744,35 @@ const tr: Translations = {
     ],
     note: "Ürün yelpazesi ve teknik özellikler, yetkili devlet müşterilerine talep üzerine sunulur.",
   },
+  band: {
+    eyebrow: "Devlet savunma siparişi kapsamında çalışıyoruz",
+    statement:
+      "Somut ihtiyaca göre kurgulanan tedarik — şartname onayından sahada teslim alıma kadar.",
+  },
+  process: {
+    eyebrow: "Nasıl çalışıyoruz",
+    title: "Talepten teslim alıma",
+    subtitle:
+      "Tedarikin her aşamasında devlet müşterileriyle şeffaf bir çalışma düzeni.",
+    steps: [
+      {
+        title: "Talep ve teknik şartname",
+        desc: "Talebi alır; ürün yelpazesini, miktarları ve teslim sürelerini netleştiririz.",
+      },
+      {
+        title: "Tedarik ve onay",
+        desc: "Doğrulanmış üreticilerden tedarik eder, şartname ve fiyatı onaylatırız.",
+      },
+      {
+        title: "Sevkiyat ve lojistik",
+        desc: "Evrak işlerini, teslimatı ve gümrük desteğini yürütürüz.",
+      },
+      {
+        title: "Teslim alma ve destek",
+        desc: "Resmi tutanakla teslim eder; garanti ve tekrar siparişler için hazır kalırız.",
+      },
+    ],
+  },
   whyus: {
     eyebrow: "Garantiler",
     title: "Neden Arsenal Pro Group",
@@ -800,6 +923,33 @@ const zh: Translations = {
       },
     ],
     note: "产品范围与技术参数按需向授权的政府客户提供。",
+  },
+  band: {
+    eyebrow: "依照国家国防订单开展业务",
+    statement: "围绕实际需求组织供应——从确认技术规格到现场验收。",
+  },
+  process: {
+    eyebrow: "我们如何工作",
+    title: "从询价到验收",
+    subtitle: "在供应的每个阶段，与政府客户保持透明的工作流程。",
+    steps: [
+      {
+        title: "询价与技术要求",
+        desc: "接收需求，明确产品范围、数量与交付周期。",
+      },
+      {
+        title: "采购与确认",
+        desc: "从核验供应商处采购，确认技术规格与价格。",
+      },
+      {
+        title: "供应与物流",
+        desc: "办理单据，安排运输与清关保障。",
+      },
+      {
+        title: "验收与支持",
+        desc: "凭正式记录交付，并持续提供质保与后续订单支持。",
+      },
+    ],
   },
   whyus: {
     eyebrow: "保障",

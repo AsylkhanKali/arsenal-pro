@@ -1,9 +1,4 @@
-import {
-  type Locale,
-  locales,
-  defaultLocale,
-  getTranslations,
-} from "../i18n";
+import { type Locale, locales, defaultLocale, getTranslations } from "../i18n";
 import { company } from "../company";
 import Reveal from "../../components/reveal";
 import {
@@ -36,6 +31,9 @@ const categoryMeta = [
   { img: "/images/cat-gear.jpg", Icon: IconHelmet },
   { img: "/images/cat-optics.jpg", Icon: IconScope },
 ];
+
+// Wide/narrow alternation on the 3-col desktop grid: [wide][narrow] / [narrow][wide].
+const categorySpan = ["lg:col-span-2", "", "", "lg:col-span-2"];
 
 const whyIcons = [
   IconShieldCheck,
@@ -223,25 +221,24 @@ export default async function LangPage({
       </section>
 
       {/* ── Statement band ───────────────────────────────────── */}
-      <section className="relative isolate overflow-hidden border-y border-hairline">
-        <div className="absolute inset-0 -z-10">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/images/band.jpg"
-            alt=""
-            className="h-full w-full object-cover object-center photo-tone"
-          />
-          <div className="absolute inset-0 bg-field-950/80" />
-          <div className="absolute inset-0 bg-gradient-to-r from-field-950 via-field-950/70 to-transparent" />
-          <div className="hairline-grid absolute inset-0 opacity-20" />
-        </div>
-
-        <div className="mx-auto max-w-6xl px-5 py-24 sm:px-6 md:py-32">
-          <Reveal className="max-w-3xl">
-            <span className="eyebrow">{t.hero.eyebrow}</span>
-            <p className="display-title mt-5 text-3xl leading-tight sm:text-4xl md:text-5xl">
-              {t.footer.tagline}
+      {/* Deliberately typographic: a quiet beat between two photo-led sections.
+          A wide photo band doesn't work here — any 16/9 crop slices the subject,
+          and bright stock fights the dark palette. */}
+      <section className="relative isolate overflow-hidden border-y border-hairline bg-field-900/50">
+        <div
+          className="hairline-grid absolute inset-0 opacity-25"
+          aria-hidden="true"
+        />
+        <div className="mx-auto max-w-6xl px-5 py-20 sm:px-6 md:py-24">
+          <Reveal className="max-w-4xl">
+            <span className="eyebrow">{t.band.eyebrow}</span>
+            <p className="display-title mt-5 text-3xl leading-[1.12] sm:text-4xl md:text-[2.75rem]">
+              {t.band.statement}
             </p>
+            <span
+              className="mt-8 block h-px w-24 bg-signal"
+              aria-hidden="true"
+            />
           </Reveal>
         </div>
       </section>
@@ -259,6 +256,8 @@ export default async function LangPage({
             </p>
           </Reveal>
 
+          {/* Asymmetric 2-3-2 rhythm: wide and narrow cards alternate instead of
+              a uniform grid, so the section doesn't read as another card wall. */}
           <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {t.categories.items.map((item, i) => {
               const meta = categoryMeta[i];
@@ -267,14 +266,18 @@ export default async function LangPage({
                 <Reveal
                   key={item.title}
                   delay={(i % 3) * 80}
-                  className="group corner-frame overflow-hidden rounded-lg border border-hairline"
+                  className={`group corner-frame overflow-hidden rounded-lg border border-hairline ${
+                    categorySpan[i] ?? ""
+                  }`}
                 >
-                  <div className="photo-tone-wrap relative aspect-[5/4] w-full">
+                  {/* h-full + absolutely-filled image so wide and narrow cards in
+                      the same row share one height and the photo always fills it. */}
+                  <div className="photo-tone-wrap relative h-full min-h-[19rem] w-full sm:min-h-[21rem]">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={meta?.img}
                       alt={item.title}
-                      className="h-full w-full object-cover photo-tone transition-transform duration-700 group-hover:scale-105"
+                      className="absolute inset-0 h-full w-full object-cover photo-tone transition-transform duration-700 group-hover:scale-105"
                     />
                     <span className="absolute left-4 top-4 z-10 inline-flex items-center gap-1.5 rounded-full border border-sand/30 bg-field-950/70 px-3 py-1 text-[11px] uppercase tracking-widest text-sand backdrop-blur-sm">
                       {t.categories.tag}
@@ -306,6 +309,74 @@ export default async function LangPage({
         </div>
       </section>
 
+      {/* ── Process ──────────────────────────────────────────── */}
+      <section id="process" className="scroll-mt-16 border-t border-hairline">
+        <div className="mx-auto grid max-w-6xl gap-10 px-5 py-24 sm:px-6 lg:grid-cols-[0.72fr_1.28fr] lg:gap-14">
+          {/* Photo column stretches to the text column's height, so there's no
+              dead space beside it. The portrait source is centred against a dark
+              surround, so cropping the sides is safe at any tall ratio. */}
+          <Reveal className="corner-frame photo-tone-wrap relative min-h-[22rem] rounded-lg border border-hairline sm:min-h-[26rem] lg:min-h-[30rem]">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/images/process.jpg"
+              alt=""
+              className="absolute inset-0 h-full w-full object-cover object-center photo-tone"
+            />
+          </Reveal>
+
+          <div>
+            <Reveal>
+              <span className="eyebrow">{t.process.eyebrow}</span>
+              <h2 className="display-title mt-4 text-4xl sm:text-5xl">
+                {t.process.title}
+              </h2>
+              <p className="mt-5 max-w-xl text-base leading-relaxed text-muted">
+                {t.process.subtitle}
+              </p>
+            </Reveal>
+
+            <ol className="mt-10">
+              {t.process.steps.map((step, i) => (
+                <Reveal
+                  as="li"
+                  key={step.title}
+                  delay={i * 90}
+                  className="relative flex gap-6 pb-9 last:pb-0"
+                >
+                  {i < t.process.steps.length - 1 ? (
+                    <span
+                      aria-hidden="true"
+                      className="absolute bottom-0 left-[1.375rem] top-12 w-px bg-hairline"
+                    />
+                  ) : null}
+                  <span className="relative z-10 grid h-11 w-11 shrink-0 place-items-center rounded-full border border-sand/30 bg-field-950 font-display text-sm text-sand">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <div className="pt-2">
+                    <h3 className="font-display text-lg uppercase tracking-wide text-paper">
+                      {step.title}
+                    </h3>
+                    <p className="mt-2 text-sm leading-relaxed text-muted">
+                      {step.desc}
+                    </p>
+                  </div>
+                </Reveal>
+              ))}
+            </ol>
+
+            <Reveal delay={120}>
+              <a
+                href="#contacts"
+                className="group mt-10 inline-flex items-center gap-2 border-t border-hairline pt-8 font-display text-sm uppercase tracking-wider text-sand transition-colors hover:text-signal-bright"
+              >
+                {t.contacts.cta}
+                <IconArrow className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+              </a>
+            </Reveal>
+          </div>
+        </div>
+      </section>
+
       {/* ── Why us ───────────────────────────────────────────── */}
       <section
         id="why"
@@ -319,18 +390,18 @@ export default async function LangPage({
             </h2>
           </Reveal>
 
-          <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {/* Hairline-ruled list rather than boxed cards — same content, different
+              texture from the photo grid above it. */}
+          <div className="mt-10 grid gap-x-14 sm:grid-cols-2">
             {t.whyus.items.map((item, i) => {
               const Icon = whyIcons[i] ?? IconShieldCheck;
               return (
                 <Reveal
                   key={item.title}
-                  delay={(i % 3) * 80}
-                  className="flex gap-4 rounded-lg border border-hairline bg-field-950/40 p-6"
+                  delay={(i % 2) * 80}
+                  className="flex items-start gap-5 border-t border-hairline py-7"
                 >
-                  <span className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-signal/10 text-signal-bright">
-                    <Icon className="h-5 w-5" />
-                  </span>
+                  <Icon className="mt-1 h-6 w-6 shrink-0 text-signal-bright" />
                   <div>
                     <h3 className="font-display text-base uppercase tracking-wide text-paper">
                       {item.title}
@@ -339,6 +410,9 @@ export default async function LangPage({
                       {item.desc}
                     </p>
                   </div>
+                  <span className="ml-auto pl-3 font-display text-sm text-faint/70">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
                 </Reveal>
               );
             })}
@@ -359,17 +433,17 @@ export default async function LangPage({
             </p>
           </Reveal>
 
-          <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {/* Flowing chips keep this section light — it's a list of names, it
+              doesn't need six equally-weighted panels. */}
+          <div className="mt-10 flex flex-wrap gap-3">
             {t.audience.items.map((item, i) => (
               <Reveal
                 key={item}
                 delay={(i % 3) * 70}
-                className="group flex items-center gap-4 rounded-lg border border-hairline bg-field-900/50 p-5 transition-colors hover:border-sand/40"
+                className="inline-flex items-center gap-2.5 rounded-full border border-hairline bg-field-900/50 px-5 py-3 transition-colors hover:border-sand/40"
               >
-                <span className="grid h-9 w-9 place-items-center rounded-full border border-sand/30 text-signal-bright">
-                  <span className="h-1.5 w-1.5 rounded-full bg-signal-bright" />
-                </span>
-                <span className="font-display text-lg uppercase tracking-wide text-paper">
+                <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-signal-bright" />
+                <span className="font-display text-sm uppercase tracking-wide text-paper sm:text-base">
                   {item}
                 </span>
               </Reveal>
@@ -427,7 +501,10 @@ export default async function LangPage({
               </a>
             </Reveal>
 
-            <Reveal delay={120} className="corner-frame overflow-hidden rounded-lg border border-hairline">
+            <Reveal
+              delay={120}
+              className="corner-frame overflow-hidden rounded-lg border border-hairline"
+            >
               <iframe
                 src={company.mapEmbed}
                 title={t.contacts.mapTitle}
