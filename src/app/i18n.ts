@@ -75,7 +75,6 @@ export interface Translations {
     items: TitleDesc[];
     note: string;
   };
-  band: { eyebrow: string; statement: string };
   process: {
     eyebrow: string;
     title: string;
@@ -199,11 +198,6 @@ const ru: Translations = {
       },
     ],
     note: "Номенклатура и технические характеристики предоставляются по запросу для уполномоченных государственных заказчиков.",
-  },
-  band: {
-    eyebrow: "Работаем по государственному оборонному заказу",
-    statement:
-      "Поставка под конкретную задачу — от согласования спецификации до приёмки на месте.",
   },
   process: {
     eyebrow: "Как мы работаем",
@@ -380,11 +374,6 @@ const kz: Translations = {
       },
     ],
     note: "Номенклатура мен техникалық сипаттамалар уәкілетті мемлекеттік тапсырыс берушілерге сұраныс бойынша ұсынылады.",
-  },
-  band: {
-    eyebrow: "Мемлекеттік қорғаныс тапсырысы бойынша жұмыс істейміз",
-    statement:
-      "Нақты тапсырмаға сай жеткізу — ерекшелікті келісуден бастап орнында қабылдауға дейін.",
   },
   process: {
     eyebrow: "Қалай жұмыс істейміз",
@@ -563,11 +552,6 @@ const en: Translations = {
     ],
     note: "Product range and technical specifications are provided on request to authorized government customers.",
   },
-  band: {
-    eyebrow: "Working under the state defense order",
-    statement:
-      "Supply built around the actual requirement — from agreeing the specification to acceptance on site.",
-  },
   process: {
     eyebrow: "How we work",
     title: "From request to acceptance",
@@ -744,11 +728,6 @@ const tr: Translations = {
     ],
     note: "Ürün yelpazesi ve teknik özellikler, yetkili devlet müşterilerine talep üzerine sunulur.",
   },
-  band: {
-    eyebrow: "Devlet savunma siparişi kapsamında çalışıyoruz",
-    statement:
-      "Somut ihtiyaca göre kurgulanan tedarik — şartname onayından sahada teslim alıma kadar.",
-  },
   process: {
     eyebrow: "Nasıl çalışıyoruz",
     title: "Talepten teslim alıma",
@@ -923,10 +902,6 @@ const zh: Translations = {
       },
     ],
     note: "产品范围与技术参数按需向授权的政府客户提供。",
-  },
-  band: {
-    eyebrow: "依照国家国防订单开展业务",
-    statement: "围绕实际需求组织供应——从确认技术规格到现场验收。",
   },
   process: {
     eyebrow: "我们如何工作",
