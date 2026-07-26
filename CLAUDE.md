@@ -3,12 +3,21 @@
 # Arsenal Pro Group — site guide
 
 Single-page multilingual "визитка" (brochure) site for **ТОО «Арсенал про Групп»**
-(Arsenal Pro Group LLP), a Kazakhstan defense supplier serving government agencies
-(armaments, ammunition, armored vehicles, tactical gear, K9, optics — full cycle).
+(Arsenal Pro Group LLP), a Kazakhstan defense **supplier** serving government agencies.
 No products or prices are shown; the site exists to build credibility.
 
+**Positioning is a hard constraint: the company supplies, it does not manufacture.**
+Copy must never claim development, production, repair, modernization or a "full cycle"
+(«полный цикл») — that over-claim was scrubbed from all 5 locales on the owner's
+instruction. Frame everything as sourcing from vetted manufacturers, logistics and
+turnkey delivery. Four supply categories only: small arms, ammunition, tactical
+gear/body armor, optics — armored vehicles/tanks and K9 were deliberately removed,
+so don't reintroduce them.
+
 Deployed via Vercel to **arsenal-pro.kz**. Pushes to `origin/main` auto-deploy — treat
-`main` as production; work on a branch and get explicit go-ahead before merging.
+`main` as production. The owner has given **standing authorization to merge**: once the
+work is verified, push the branch, open a PR and merge it without asking. The
+authorization covers skipping the question, not skipping the verification below.
 
 ## Stack
 
@@ -35,6 +44,30 @@ root).
 - Real business data (BIN, director, phone, email, address, Google Maps embed) is
   centralized in `src/app/company.ts`. **Do not replace with placeholders** — it's
   the company's actual registration info.
+
+## Page structure
+
+All sections live in `src/app/[lang]/page.tsx`, in order: hero → trust band → `#about`
+→ `#categories` → `#process` → `#why` → `#audience` → `#contacts`. Nav (header, footer,
+and the `links` prop passed down to `mobile-nav`) lists only About / Categories /
+Contacts.
+
+Section **shapes are deliberately varied** — the page previously read as one card grid
+repeated six times. Keep them distinct when editing: `#categories` alternates wide and
+narrow cards (`categorySpan`), `#process` is a numbered timeline beside a photo column,
+`#why` is a hairline-ruled list (no boxes), `#audience` is flowing chips.
+
+A full-bleed "statement band" between About and Categories was tried twice (photo, then
+typographic) and **removed on the owner's request both times** — it read as an empty
+slab. Don't add it back.
+
+### Layout gotcha
+
+Card photos need a **definite** height or `h-full` collapses to the image's intrinsic
+size and blows out the row. In `#categories` the wrapper carries `h-full min-h-[…]`
+and the `<img>` is `absolute inset-0 h-full w-full object-cover`, so wide and narrow
+cards in a row share one height. Same reason `#process` uses a stretched photo column
+instead of a fixed `aspect-[…]`: it matches the text column's height with no dead space.
 
 ## Design system
 
@@ -63,10 +96,18 @@ library dependency).
 ## Images
 
 `public/images/*.jpg` are **Pexels placeholders** (free commercial license), tone-treated
-via `.photo-tone` to match the palette. See `public/images/CREDITS.md` for the
-subject/section mapping — replace with owned/licensed photography before serious
-promotion, keeping the same filenames so nothing else needs to change.
+via `.photo-tone` to match the palette: `hero`, `about`, `process`, and four `cat-*`
+category shots. See `public/images/CREDITS.md` for the subject/section mapping and
+source ids — replace with owned/licensed photography before serious promotion, keeping
+the same filenames so nothing else needs to change.
 `public/camo.svg` is a generated tileable camo texture used in `.field-backdrop`.
+
+When swapping a photo, match the slot's ratio and keep the subject clear of the frame
+edges — `about.jpg` (4:3) was replaced once because the original had the subject's head
+jammed against the top edge, which read as a cropping bug. Prefer **dark, low-key**
+sources; bright washed-out stock fights the palette even after `.photo-tone`.
+`process.jpg` is 4:5 portrait and sits in a column that stretches to the text height,
+so a dark, horizontally-centred subject there crops safely at any tall ratio.
 
 ## SEO
 
