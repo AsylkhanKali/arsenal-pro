@@ -35,9 +35,12 @@ export default function ExplodedOptic({ children }: { children: ReactNode }) {
     let raf = 0;
     const update = () => {
       raf = 0;
-      // Seats over the first ~60% of the section's travel, starting as its top
-      // clears the lower third of the viewport.
-      const travelled = window.scrollY + window.innerHeight * 0.85 - top;
+      // Starts once the section top has climbed to mid-viewport, so the reader
+      // is looking at the section before anything moves, and finishes while the
+      // plate is still centred on screen. Triggering any earlier means the
+      // assembly plays while the section is only just edging into view and is
+      // easy to scroll straight past.
+      const travelled = window.scrollY + window.innerHeight * 0.45 - top;
       const p = travelled / (height * 0.6);
       const assembly = p < 0 ? 0 : p > 1 ? 1 : p;
       el.style.setProperty("--assembly", assembly.toFixed(3));

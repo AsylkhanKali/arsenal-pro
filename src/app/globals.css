@@ -522,7 +522,7 @@ body {
   align-items: flex-end;
   gap: 2.75rem;
   width: max-content;
-  animation: cal-drift 90s linear infinite;
+  animation: cal-drift 60s linear infinite;
 }
 @keyframes cal-drift {
   to {
@@ -583,9 +583,54 @@ body {
   }
 }
 
+/* ── Guarantees: ruled rows + inspection seal (#why) ────────
+   The rule is a pseudo-element rather than a border so it can draw itself in
+   as the row arrives, like a line being ruled onto a form. */
+.rule-row::before {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  height: 1px;
+  background: var(--color-hairline);
+  transform-origin: left;
+  transition: transform 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.vs-check {
+  stroke-dasharray: 52; /* ≈ summed length of the check path */
+  color: var(--color-signal-bright);
+  transition: stroke-dashoffset 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.3s;
+}
+/* Both are drawn by default and only start hidden where JS can reveal them,
+   the same guard `.reveal` uses — otherwise no-JS visitors get an unruled list
+   and a seal with no check in it. */
+@media (scripting: enabled) {
+  .rule-row::before {
+    transform: scaleX(0);
+  }
+  .rule-row.is-in::before {
+    transform: scaleX(1);
+  }
+  .vs-check {
+    stroke-dashoffset: 52;
+  }
+  .reveal.is-in .vs-check {
+    stroke-dashoffset: 0;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+  /* Rules and the seal's check are simply present, not drawn. */
+  .rule-row::before {
+    transform: scaleX(1);
+    transition: none;
+  }
+  .vs-check {
+    stroke-dashoffset: 0;
+    transition: none;
   }
   /* ExplodedOptic attaches nothing in this mode; pin the assembled state. */
   .eo-stage {
