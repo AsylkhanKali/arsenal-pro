@@ -28,7 +28,10 @@ export default function SiteHeader({ locale }: { locale: Locale }) {
             height={479}
             className="h-9 w-auto sm:h-10"
           />
-          <span className="flex flex-col leading-none">
+          {/* Hidden on phones so all five languages fit in the bar: the name is
+              148px of a 335px row there, and the hero states it in display type
+              immediately below anyway. The mark stays at every width. */}
+          <span className="hidden flex-col leading-none sm:flex">
             <span className="font-display text-base font-semibold uppercase tracking-wide text-paper">
               {brandName}
             </span>
@@ -60,6 +63,11 @@ export default function SiteHeader({ locale }: { locale: Locale }) {
             <IconArrow className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
           </a>
         </div>
+
+        {/* Language has to be changeable the moment the page opens, not two
+            taps deep inside the menu — most visitors arrive on /ru regardless
+            of which of the five they actually read. */}
+        <LanguageSwitcher locale={locale} compact className="md:hidden" />
 
         <MobileNav
           links={links}
